@@ -2,6 +2,8 @@ package xyz.mrseng.fasttranslate.utils;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,6 +49,17 @@ public class UIUtils {
         return getContext().getResources().getString(id);
     }
 
+
+    /** 获取图片 */
+    public static Drawable getDrawable(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return getContext().getResources().getDrawable(id, null);
+        } else {
+            return getContext().getResources().getDrawable(id);
+        }
+    }
+
+
     /** 是否运行在主线程 */
     public static boolean isRunOnMainThread() {
         return MyApplication.getMainThreadID() == Thread.currentThread().getId();
@@ -67,6 +80,7 @@ public class UIUtils {
         getWindowManager().getDefaultDisplay().getSize(point);
         return point.y;
     }
+
     public static int getWindowWidth() {
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);

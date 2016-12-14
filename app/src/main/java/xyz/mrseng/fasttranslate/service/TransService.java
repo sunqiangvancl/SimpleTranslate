@@ -48,7 +48,6 @@ public class TransService {
         this.text = text;
     }
 
-
     public ResultBean doTranslate() {
         notifyBeforeTranslate();
         ResultBean data = doTranslate(text, lanBean.fromCode, lanBean.toCode);
@@ -80,15 +79,18 @@ public class TransService {
         }
     }
 
+    //监听队列
     private ArrayList<TranslateListener> mListenerList = new ArrayList<>();
 
-    public void logoutTranslateListener(TranslateListener listener) {
+    //移除监听
+    public void removeTranslateListener(TranslateListener listener) {
         if (listener != null && mListenerList.contains(listener)) {
             mListenerList.remove(listener);
         }
     }
 
-    public void registTranslateListener(TranslateListener listener) {
+    //注册监听
+    public void addTranslateListener(TranslateListener listener) {
         if (listener != null && !mListenerList.contains(listener)) {
             mListenerList.add(listener);
         }

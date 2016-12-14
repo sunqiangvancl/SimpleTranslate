@@ -36,7 +36,7 @@ public class LangHolder extends BaseHolder<LanguageBean> {
     @Override
     public View initView() {
         mService = TransService.getNewInstance();
-        View view = UIUtils.inflate(R.layout.card_language_bar);
+        View view = UIUtils.inflate(R.layout.bar_language_bar);
         mSp_left = (Spinner) view.findViewById(R.id.sp_trans_left);
         mSp_right = (Spinner) view.findViewById(R.id.sp_trans_right);
         mIv_switch = (ImageView) view.findViewById(R.id.iv_switch);

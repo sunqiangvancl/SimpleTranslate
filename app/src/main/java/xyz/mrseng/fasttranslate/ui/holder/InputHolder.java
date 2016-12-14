@@ -21,10 +21,6 @@ public class InputHolder extends BaseHolder<String> {
     private ImageView mIv_voice;
     private ImageView mIv_handwrite;
     private EditText mEt_home;
-    private HomeHolder mHomeHolder;
-    public void setHomeHolder(HomeHolder homeHolder){
-        mHomeHolder = homeHolder;
-    }
     @Override
     public View initView() {
         mService = TransService.getNewInstance();
@@ -34,19 +30,8 @@ public class InputHolder extends BaseHolder<String> {
         mIv_voice = (ImageView) view.findViewById(R.id.iv_camera_voice);
         mIv_handwrite = (ImageView) view.findViewById(R.id.iv_hand_writing_home);
         mEt_home.addTextChangedListener(new MyTextChangeListener());
-        mEt_home.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (mHomeHolder!=null){
-                    mHomeHolder.onEditTextTouch();
-                }
-                return false;
-            }
-        });
         return view;
-
     }
-
     @Override
     public void onRefresh(String data) {
         mService.setText(data);
@@ -57,7 +42,6 @@ public class InputHolder extends BaseHolder<String> {
             }
         });
     }
-
     private class MyTextChangeListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,10 +56,4 @@ public class InputHolder extends BaseHolder<String> {
             setData(s.toString());
         }
     }
-
-    public String getInputText() {
-        return mEt_home.getText().toString();
-    }
-
-
 }

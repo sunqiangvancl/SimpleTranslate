@@ -2,27 +2,29 @@ package xyz.mrseng.fasttranslate.ui.activity;
 
 import android.os.Bundle;
 
+import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.ui.activity.base.BaseAppCompatActivity;
-import xyz.mrseng.fasttranslate.ui.holder.HomeHolder;
+import xyz.mrseng.fasttranslate.ui.fragment.HomeFragment;
 import xyz.mrseng.fasttranslate.utils.ActivityUtils;
 
 /**
  * Created by MrSeng on 2016/12/12.
- * 翻译页面
+ * 主页面Activity
  */
 public class HomeActivity extends BaseAppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HomeHolder mTHolder = new HomeHolder();
-        setContentView(mTHolder.getRootView());
+        setContentView(R.layout.activity_home);
+        if (savedInstanceState == null) {
+            setContentView(R.layout.activity_home);
+            getSupportFragmentManager().beginTransaction().add(R.id.fl_home, new HomeFragment()).commit();
+        }
     }
 
-    /** 返回直接结束应用 */
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void finish() {
+        super.finish();
         ActivityUtils.getNewInstance().exit();
     }
 }

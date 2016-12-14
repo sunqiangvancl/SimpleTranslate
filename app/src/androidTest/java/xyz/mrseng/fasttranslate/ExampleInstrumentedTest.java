@@ -7,6 +7,8 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+
 import xyz.mrseng.fasttranslate.dao.HistoryDao;
 import xyz.mrseng.fasttranslate.domain.HistoryItemBean;
 
@@ -33,16 +35,16 @@ public class ExampleInstrumentedTest {
         Context context = InstrumentationRegistry.getTargetContext();
         HistoryDao dao = new HistoryDao(context);
         HistoryItemBean bean = new HistoryItemBean();
-//        for (int i = 50; i < 100; i++) {
-//            bean.marked = i % 3 == 0 ? 1 : 0;
-//            bean.fromCode = "zh";
-//            bean.fromWord = "你好" + i;
-//            bean.toCode = "en";
-//            bean.toWord = "hello" + i;
-//            bean.time = System.currentTimeMillis();
-//            dao.insert(bean);
-//        }
-//        ArrayList<HistoryItemBean> list = dao.queryMarkedList(0);
+        for (int i = 0; i < 100; i++) {
+            bean.marked = i % 3 == 0 ? 1 : 0;
+            bean.fromCode = "zh";
+            bean.fromWord = "你好" + i;
+            bean.toCode = "en";
+            bean.toWord = "hello" + i;
+            bean.time = System.currentTimeMillis();
+            dao.insert(bean);
+        }
+        ArrayList<HistoryItemBean> list = dao.queryMarkedList(0);
         bean = dao.queryOne(60);
         bean.marked = 1;
         dao.update(bean);

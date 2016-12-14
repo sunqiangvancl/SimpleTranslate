@@ -23,7 +23,7 @@ public class BaseActivity extends Activity {
 
     @Override
     public void finish() {
-        super.finish();
         mAu.remove(this);
+        super.finish();
     }
 }

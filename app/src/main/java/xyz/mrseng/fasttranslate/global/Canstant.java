@@ -20,4 +20,5 @@ public interface Canstant {
     String KDXF_APP_ID = "58501642";
 
 
+    int REQ_CODE_START_TRANSACTIVITY = 1;
 }

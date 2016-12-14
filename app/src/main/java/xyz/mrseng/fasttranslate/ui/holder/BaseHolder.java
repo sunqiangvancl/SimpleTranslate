@@ -1,7 +1,9 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.Adapter;
 
 import xyz.mrseng.fasttranslate.service.TransService;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
@@ -14,7 +16,26 @@ public abstract class BaseHolder<T> {
     private View mRootView;
     private T mData;
     private Context mContext;
-    public TransService mService;
+    protected TransService mService;
+    private Activity mActivity;
+    private Adapter mAdapter;
+
+    public BaseHolder(Adapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
+    public Adapter getmAdapter() {
+        return mAdapter;
+    }
+
+    public void setActivity(Activity activity) {
+        mActivity = activity;
+    }
+
+    public Activity getActivity() {
+        return mActivity;
+    }
+
 
     public BaseHolder() {
         mService = TransService.getNewInstance();
@@ -45,7 +66,7 @@ public abstract class BaseHolder<T> {
         return mContext;
     }
 
-    public T getData(){
+    public T getData() {
         return mData;
     }
 

@@ -4,15 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechUtility;
-
 /**
  * Created by MrSeng on 2016/12/12.
  * 全局的application，用以初始化整个应用的不分对象
  */
 
 public class MyApplication extends Application {
+
 
     private static Handler mHandler;
     private static Context mContext;
@@ -24,10 +22,6 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         mHandler = new Handler();
         mMainThreadID = android.os.Process.myTid();//主线程ID
-
-
-        SpeechUtility.createUtility(mContext, SpeechConstant.APPID + "="+Canstant.KDXF_APP_ID);
-
     }
 
     public static Context getAppContext() {

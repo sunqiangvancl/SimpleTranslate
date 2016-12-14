@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 
 import xyz.mrseng.fasttranslate.R;
+import xyz.mrseng.fasttranslate.ui.activity.base.BaseActivity;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -33,4 +34,9 @@ public class TransActivity extends Activity {
         mFl_root.addView(mTransCard);
     }
 
+
+    @Override
+    public void finish() {
+        super.finish();
+    }
 }

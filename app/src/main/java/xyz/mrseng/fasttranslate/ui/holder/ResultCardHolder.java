@@ -31,7 +31,7 @@ public class ResultCardHolder extends BaseHolder<ResultBean> implements TransSer
         mTv_readLang = (TextView) view.findViewById(R.id.tv_audio_lang);
         mIv_copy = (ImageView) view.findViewById(R.id.iv_copy_result);
         mIv_copy.setOnClickListener(this);
-        mService.registTranslateListener(this);
+        mService.addTranslateListener(this);
         return view;
     }
 
