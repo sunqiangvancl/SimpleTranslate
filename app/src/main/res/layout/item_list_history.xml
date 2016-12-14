@@ -5,39 +5,39 @@
               android:orientation="horizontal">
 
     <LinearLayout
+        android:gravity="left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="10dp">
+        android:padding="5dp"
+        >
 
         <TextView
             android:id="@+id/tv_fromwrod_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp"
+            android:padding="1dp"
             android:text="@string/app_id_baidu"
             android:textColor="@color/black"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_toword_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp"
+            android:padding="1dp"
             android:text="@string/app_id_baidu"
             android:textColor="@color/black_overlay"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_mark_item"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginRight="5dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_star36"/>
+        android:src="@drawable/ic_star_black"/>
 
 </LinearLayout>

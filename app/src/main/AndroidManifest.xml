@@ -38,9 +38,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
-        </activity>
-        <activity android:name=".ui.activity.TransActivity">
+        <activity android:name=".ui.activity.HomeActivity"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
     </application>
 

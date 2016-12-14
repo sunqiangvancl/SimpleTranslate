@@ -1,9 +1,12 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -25,10 +28,18 @@ public class InputHolder extends BaseHolder<String> {
     public View initView() {
         mService = TransService.getNewInstance();
         View view = UIUtils.inflate(R.layout.card_input_home);
-        mEt_home = (EditText) view.findViewById(R.id.et_trans_home);
+
         mIv_camera = (ImageView) view.findViewById(R.id.iv_camera_home);
         mIv_voice = (ImageView) view.findViewById(R.id.iv_camera_voice);
         mIv_handwrite = (ImageView) view.findViewById(R.id.iv_hand_writing_home);
+
+        mEt_home = (EditText) view.findViewById(R.id.et_trans_home);
+//        mEt_home.setInputType(InputType.TYPE_NULL);//强制隐藏输入法
+        //输入法管理器
+//        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(mEt_home.getWindowToken(),0);
+        mEt_home.clearFocus();//失去焦点
+
         mEt_home.addTextChangedListener(new MyTextChangeListener());
         return view;
     }
