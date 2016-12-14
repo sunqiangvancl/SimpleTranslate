@@ -1,17 +1,12 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
-import android.content.Context;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import xyz.mrseng.fasttranslate.R;
-import xyz.mrseng.fasttranslate.global.ThreadManager;
 import xyz.mrseng.fasttranslate.service.TransService;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
@@ -24,6 +19,7 @@ public class InputHolder extends BaseHolder<String> {
     private ImageView mIv_voice;
     private ImageView mIv_handwrite;
     private EditText mEt_home;
+
     @Override
     public View initView() {
         mService = TransService.getNewInstance();
@@ -43,16 +39,13 @@ public class InputHolder extends BaseHolder<String> {
         mEt_home.addTextChangedListener(new MyTextChangeListener());
         return view;
     }
+
     @Override
     public void onRefresh(String data) {
         mService.setText(data);
-        ThreadManager.execute(new Runnable() {
-            @Override
-            public void run() {
-                mService.doTranslate();
-            }
-        });
+        mService.doTranslate();
     }
+
     private class MyTextChangeListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

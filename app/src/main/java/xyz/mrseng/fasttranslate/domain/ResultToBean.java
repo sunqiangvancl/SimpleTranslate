@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by MrSeng on 2016/12/12.
  */
 
-public class ResultBean  implements Serializable{
+public class ResultToBean implements Serializable{
     public String from;
     public String to;
     public ArrayList<TransResult> trans_result;

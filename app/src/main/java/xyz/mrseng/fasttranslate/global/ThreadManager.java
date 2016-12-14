@@ -11,12 +11,21 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadManager {
     private static MyThreadPool myThreadPool;
+    private static MyThreadPool myThreadPoolSingle;
 
     public synchronized static void execute(Runnable run) {
         if (myThreadPool == null) {
             myThreadPool = new MyThreadPool(10, 10, 20);
         }
         myThreadPool.execute(run);
+    }
+
+    //翻译类需要单一子线程来实现，可以避免数据错乱
+    public synchronized static void executeOnSingleThread(Runnable run) {
+        if (myThreadPoolSingle == null) {
+            myThreadPoolSingle = new MyThreadPool(1, 1, 20);
+        }
+        myThreadPoolSingle.execute(run);
     }
 
 

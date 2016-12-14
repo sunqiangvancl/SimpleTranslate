@@ -64,13 +64,8 @@ class HttpGet {
             conn.disconnect(); // 断开连接
 
             return text;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+
+        }  catch (IOException | KeyManagementException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
@@ -122,7 +117,7 @@ class HttpGet {
 
     /**
      * 对输入的字符串进行URL编码, 即转换为%20这种形式
-     * 
+     *
      * @param input 原文
      * @return URL编码. 如果编码失败, 则返回原文
      */

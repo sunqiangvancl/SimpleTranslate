@@ -2,80 +2,66 @@ package xyz.mrseng.fasttranslate.service;
 
 import java.util.ArrayList;
 
-import xyz.mrseng.fasttranslate.domain.LanguageBean;
-import xyz.mrseng.fasttranslate.domain.ResultBean;
+import xyz.mrseng.fasttranslate.domain.TranslateBean;
+import xyz.mrseng.fasttranslate.global.ThreadManager;
+import xyz.mrseng.fasttranslate.service.protocol.BDTransProtocol;
 
 /**
  * Created by MrSeng on 2016/12/13.
+ * 翻译的api，
  */
 
 public class TransService {
-    private TranslateProtocol mTransProto = TranslateProtocol.getNewInstance();
-    private long lastReqTime = 0;
+
+    //百度协议
+    private BDTransProtocol mBdProtocol = BDTransProtocol.getNewInstance();
     //单例
-    private static TransService mService;
+    private static TransService mService = new TransService();
 
     public static TransService getNewInstance() {
-        if (mService == null) {
-            synchronized (TransService.class) {
-                if (mService == null) {
-                    mService = new TransService();
-                }
-            }
-        }
         return mService;
     }
 
     private TransService() {
     }
 
-    private String text;
-    private LanguageBean lanBean;
+    private TranslateBean mTransBean = new TranslateBean();
 
-    public String getText() {
-        return text;
-    }
-
-    public LanguageBean getLanBean() {
-        return lanBean;
-    }
-
-    public void setLanBean(LanguageBean lanBean) {
-        this.lanBean = lanBean;
+    public void setLanguage(String fromCode, String toCode) {
+        mTransBean.toCode = toCode;
+        mTransBean.fromCode = fromCode;
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.mTransBean.fromWord = text;
     }
 
-    public ResultBean doTranslate() {
-        notifyBeforeTranslate();
-        ResultBean data = doTranslate(text, lanBean.fromCode, lanBean.toCode);
-        notifyAfterTranslate(data);
-        return data;
+    public void doTranslate() {
+        ThreadManager.executeOnSingleThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyBeforeTranslate(mTransBean);
+                TranslateBean data = mBdProtocol.getData(mTransBean.fromWord, mTransBean.fromCode, mTransBean.toCode);
+                if (data != null) {
+                    mTransBean = data;
+                }else{
+                    mTransBean.toWord = null;
+                }
+                notifyAfterTranslate(mTransBean);
+
+            }
+        });
     }
 
-    private ResultBean doTranslate(final String text, final String mFromCode, final String mToCode) {
-//        ResultBean data = null;
-//        long thisReqTime = System.currentTimeMillis();
-//        long time = thisReqTime - lastReqTime;
-//        if (111111 > 1000) {
-//            data = mTransProto.getData(text, mFromCode, mToCode);
-//        }
-//        lastReqTime = thisReqTime;
-        return mTransProto.getData(text, mFromCode, mToCode);
-    }
-
-
-    private void notifyBeforeTranslate() {
+    private void notifyBeforeTranslate(TranslateBean mTransBean) {
         for (int i = 0; i < mListenerList.size(); i++) {
-            mListenerList.get(i).beforeTranslate();
+            mListenerList.get(i).beforeTranslate(mTransBean);
         }
     }
 
-    private void notifyAfterTranslate(ResultBean data) {
+    private void notifyAfterTranslate(TranslateBean mTransBean) {
         for (int i = 0; i < mListenerList.size(); i++) {
-            mListenerList.get(i).afterTranslate(data);
+            mListenerList.get(i).afterTranslate(mTransBean);
         }
     }
 
@@ -96,11 +82,11 @@ public class TransService {
         }
     }
 
+    public abstract interface TranslateListener {
+        void afterTranslate(TranslateBean transInfo);
 
-    public interface TranslateListener {
-        void afterTranslate(ResultBean data);
 
-        void beforeTranslate();
+        void beforeTranslate(TranslateBean transInfo);
     }
 
 }

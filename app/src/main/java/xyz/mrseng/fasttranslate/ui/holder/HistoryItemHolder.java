@@ -26,10 +26,9 @@ public class HistoryItemHolder extends BaseHolder<HistoryItemBean> {
         mTv_to = (TextView) view.findViewById(R.id.tv_toword_item);
         return view;
     }
-
     @Override
     public void onRefresh(HistoryItemBean data) {
-        mIv_mark.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_star_marked));
+        mIv_mark.setImageDrawable(UIUtils.getDrawable(data.marked==0? R.drawable.ic_star_black:R.drawable.ic_star_marked));
         mTv_from.setText(data.fromWord);
         mTv_to.setText(data.toWord);
     }

@@ -1,10 +1,11 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import xyz.mrseng.fasttranslate.R;
-import xyz.mrseng.fasttranslate.domain.ResultBean;
+import xyz.mrseng.fasttranslate.domain.TranslateBean;
 import xyz.mrseng.fasttranslate.service.TransService;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
@@ -13,27 +14,25 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  * 首页底部的逻辑执行者
  */
 
-public class HomeBottomHolder extends BaseHolder<Integer> implements TransService.TranslateListener{
+public class HomeBottomHolder extends BaseHolder<Integer> implements TransService.TranslateListener {
     public static final int SHOW_HISTORY = 0;
     public static final int SHOW_WAITING = 1;
     public static final int SHOW_RESULT = 2;
-    public static final int SHOW_NO_NET = 3;
+    public static final int SHOW_ERROR = 3;
     private TransService mService;
-    //是否已经进行过一次有效地翻译，有过一次翻译结果不为空的经历，这样可以决定应该显示结果卡片还是历史卡片
-    //因为应用初始化的时候回测试翻译，如果没有这个标记，历史卡片将没有时机显示
-    private boolean hasValidTranslate = false;
 
     private View mWaiting;
     private ResultCardHolder mResultHolder;
     private HistoryCardHolder mHistoryHolder;
+    private View mErrorPager;
 
 
     @Override
     public View initView() {
         mService = TransService.getNewInstance();
-        mService.addTranslateListener(this);
         FrameLayout frameLayout = new FrameLayout(UIUtils.getContext());
         initWidget(frameLayout);
+        mService.addTranslateListener(this);
         return frameLayout;
     }
 
@@ -45,43 +44,53 @@ public class HomeBottomHolder extends BaseHolder<Integer> implements TransServic
         //历史记录
         mHistoryHolder = new HistoryCardHolder();
         mHistoryHolder.initData(0);
-
+        //网络异常
+        mErrorPager = UIUtils.inflate(R.layout.card_no_net_work);
+        mErrorPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mService.doTranslate();
+            }
+        });
         //add
         root.removeAllViews();
         root.addView(mWaiting);
         root.addView(mResultHolder.getRootView());
         root.addView(mHistoryHolder.getRootView());
-
+        root.addView(mErrorPager);
         //invisible
-        mWaiting.setVisibility(View.GONE);
-        mResultHolder.getRootView().setVisibility(View.GONE);
-        mHistoryHolder.getRootView().setVisibility(View.GONE);
-
+        mWaiting.setVisibility(View.INVISIBLE);
+        mResultHolder.getRootView().setVisibility(View.INVISIBLE);
+        mHistoryHolder.getRootView().setVisibility(View.INVISIBLE);
+        mErrorPager.setVisibility(View.INVISIBLE);
     }
-
     @Override
     public void onRefresh(final Integer state) {
         UIUtils.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                mWaiting.setVisibility(state == SHOW_WAITING ? View.VISIBLE : View.GONE);
-                mHistoryHolder.getRootView().setVisibility(state == SHOW_HISTORY ? View.VISIBLE : View.GONE);
-                mResultHolder.getRootView().setVisibility(state == SHOW_RESULT ? View.VISIBLE : View.GONE);
+                mWaiting.setVisibility(state == SHOW_WAITING ? View.VISIBLE : View.INVISIBLE);
+                mHistoryHolder.getRootView().setVisibility(state == SHOW_HISTORY ? View.VISIBLE : View.INVISIBLE);
+                mResultHolder.getRootView().setVisibility(state == SHOW_RESULT ? View.VISIBLE : View.INVISIBLE);
+                mErrorPager.setVisibility(state == SHOW_ERROR ? View.VISIBLE : View.INVISIBLE);
             }
         });
     }
     @Override
-    public void afterTranslate(ResultBean data) {
+    public void afterTranslate(TranslateBean transInfo) {
         //初次进入应用，未进行有效翻译，显示历史卡片
-        setData(hasValidTranslate?HomeBottomHolder.SHOW_RESULT:HomeBottomHolder.SHOW_HISTORY);
-        if (data!=null){
-            hasValidTranslate = true;
+        if (!TextUtils.isEmpty(transInfo.toWord)) {
+            setData(SHOW_RESULT);
+        } else if (TextUtils.isEmpty(transInfo.fromWord)) {//from To，都是null
+            setData(SHOW_HISTORY);
+        } else {//from非空，to是null
+            setData(SHOW_ERROR);
         }
     }
+
     @Override
-    public void beforeTranslate() {
+    public void beforeTranslate(TranslateBean transInfo) {
         //等待状态
         setData(HomeBottomHolder.SHOW_WAITING);
     }
-
 }

@@ -40,17 +40,15 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         BaseHolder<T> holder;
         if (convertView == null) {
-            convertView = getHolder().getRootView();
             holder = getHolder();
+            convertView = holder.getRootView();
             convertView.setTag(holder);
         }else{
             holder = (BaseHolder<T>) convertView.getTag();
         }
         holder.setData(getItem(position));
-        return convertView;
+        return holder.getRootView();
     }
-
     abstract public BaseHolder<T> getHolder();
-
 
 }

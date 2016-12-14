@@ -144,8 +144,8 @@ public class LangHolder extends BaseHolder<LanguageBean> {
 
     @Override
     public void onRefresh(LanguageBean data) {
-        mService.setLanBean(data);
-        ThreadManager.execute(new Runnable() {
+        mService.setLanguage(data.fromCode,data.toCode);
+        ThreadManager.executeOnSingleThread(new Runnable() {
             @Override
             public void run() {
                 mService.doTranslate();

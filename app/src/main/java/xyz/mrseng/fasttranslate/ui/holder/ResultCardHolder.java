@@ -6,7 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import xyz.mrseng.fasttranslate.R;
-import xyz.mrseng.fasttranslate.domain.ResultBean;
+import xyz.mrseng.fasttranslate.domain.TranslateBean;
 import xyz.mrseng.fasttranslate.service.TransService;
 import xyz.mrseng.fasttranslate.utils.TransUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
@@ -16,48 +16,47 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  * 结果卡片的逻辑
  */
 
-public class ResultCardHolder extends BaseHolder<ResultBean> implements TransService.TranslateListener, View.OnClickListener {
+public class ResultCardHolder extends BaseHolder<TranslateBean> implements TransService.TranslateListener, View.OnClickListener {
 
-    private TextView mTv_result;
-    private TextView mTv_readLang;
-    private ImageView mIv_copy;
+    private TextView mTv_result;//显示翻译结果
+    private TextView mTv_readLang;//显示翻译至何种语言，显示朗读
 
     @Override
     public View initView() {
-
         View view = UIUtils.inflate(R.layout.card_result_trans);
 
         mTv_result = (TextView) view.findViewById(R.id.tv_result_card);
         mTv_readLang = (TextView) view.findViewById(R.id.tv_audio_lang);
-        mIv_copy = (ImageView) view.findViewById(R.id.iv_copy_result);
+
+        ImageView mIv_copy = (ImageView) view.findViewById(R.id.iv_copy_result);
         mIv_copy.setOnClickListener(this);
+
+        //注册监听
         mService.addTranslateListener(this);
         return view;
     }
 
     @Override
-    public void onRefresh(final ResultBean data) {
+    public void onRefresh(final TranslateBean data) {
         UIUtils.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                mTv_result.setText(data == null ? "" : data.trans_result.get(0).dst);
-                if (data != null) {
-                    String lang = TransUtils.switchCodeAndWord(data.to);
-                    mTv_readLang.setText(lang);
-                }
+                mTv_result.setText(data.toWord == null ? "" : data.toWord);
+                mTv_readLang.setText(TransUtils.switchCodeAndWord(data.toCode));
             }
         });
     }
 
     @Override
-    public void afterTranslate(ResultBean data) {
-        onRefresh(data);
+    public void afterTranslate(TranslateBean transInfo) {
+        onRefresh(transInfo);
     }
 
     @Override
-    public void beforeTranslate() {
+    public void beforeTranslate(TranslateBean transInfo) {
     }
 
+    //点击事件侦听，复制
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

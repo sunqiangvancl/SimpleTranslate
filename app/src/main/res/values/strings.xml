@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FastTranslate</string>
+    <string name="app_name">简译</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="conDes_logo">图片logo</string>
@@ -43,5 +43,6 @@
 
     <string name="app_id_baidu">20161212000033857</string>
     <string name="securityKey">PI_Y82S5vTmv97a7ONmU</string>
-    <string name="no_net">没有网络</string>
+    <string name="no_net">轻触重新加载</string>
+    <string name="trans_now">即时翻译</string>
 </resources>

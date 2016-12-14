@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="xyz.mrseng.fasttranslate.ui.activity.HomeActivity"
-    >
+    tools:context="xyz.mrseng.fasttranslate.ui.activity.HomeActivity">
     <FrameLayout
         android:id="@+id/fl_home"
         android:layout_width="match_parent"
