@@ -3,6 +3,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="conDes_logo">图片logo</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
     <string name="hint_et_pleaseInput">点击即可输入文本</string>
     <string name="copy_success">复制成功！</string>
     <!--语言-->

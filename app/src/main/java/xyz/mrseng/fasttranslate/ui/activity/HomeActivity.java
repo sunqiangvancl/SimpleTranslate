@@ -1,6 +1,8 @@
 package xyz.mrseng.fasttranslate.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +18,15 @@ import xyz.mrseng.fasttranslate.utils.ActivityUtils;
  * 主页面Activity
  */
 public class HomeActivity extends BaseAppCompatActivity {
+
+    private DrawerLayout mDl;
+    private ActionBarDrawerToggle mToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mDl = (DrawerLayout) findViewById(R.id.ml_home);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_home, new HomeFragment()).commit();
         initActionBar();
     }
@@ -34,7 +41,15 @@ public class HomeActivity extends BaseAppCompatActivity {
     //actionbar
     private void initActionBar() {
         ActionBar bar = getSupportActionBar();
-        bar.setDisplayShowHomeEnabled(true);
+
+        bar.setHomeButtonEnabled(true);
+        bar.setDisplayHomeAsUpEnabled(true);//显示返回箭头,当与侧边栏绑定后显示侧边栏图标
+
+        //初始化侧边栏开关
+        mToggle = new
+                ActionBarDrawerToggle(this, mDl, R.drawable.ic_menu_white, R.string.drawer_open, R.string.drawer_close);
+        mToggle.syncState();
+
     }
 
     @Override
@@ -49,6 +64,9 @@ public class HomeActivity extends BaseAppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_text:
                 Toast.makeText(this, "MenuTest", Toast.LENGTH_SHORT).show();
+                break;
+            case android.R.id.home:
+                mToggle.onOptionsItemSelected(item);
                 break;
         }
         return super.onOptionsItemSelected(item);
