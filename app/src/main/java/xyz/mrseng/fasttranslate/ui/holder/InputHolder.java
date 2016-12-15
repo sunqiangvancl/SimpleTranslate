@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,6 +20,10 @@ public class InputHolder extends BaseHolder<String> {
     private ImageView mIv_voice;
     private ImageView mIv_handwrite;
     private EditText mEt_home;
+
+    public InputHolder(Activity activity) {
+        super(activity);
+    }
 
     @Override
     public View initView() {

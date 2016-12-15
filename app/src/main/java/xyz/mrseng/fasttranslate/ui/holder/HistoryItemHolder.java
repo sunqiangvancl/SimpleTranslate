@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,10 @@ public class HistoryItemHolder extends BaseHolder<HistoryItemBean> {
     private ImageView mIv_mark;
     private TextView mTv_from;
     private TextView mTv_to;
+
+    public HistoryItemHolder(Activity activity) {
+        super(activity);
+    }
 
     @Override
     public View initView() {

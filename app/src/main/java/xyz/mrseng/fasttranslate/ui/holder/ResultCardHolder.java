@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,10 @@ public class ResultCardHolder extends BaseHolder<TranslateBean> implements Trans
 
     private TextView mTv_result;//显示翻译结果
     private TextView mTv_readLang;//显示翻译至何种语言，显示朗读
+
+    public ResultCardHolder(Activity activity) {
+        super(activity);
+    }
 
     @Override
     public View initView() {

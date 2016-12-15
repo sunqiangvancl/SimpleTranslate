@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.ListView;
 
@@ -21,6 +22,10 @@ public class HistoryCardHolder extends BaseHolder<ArrayList<HistoryItemBean>> {
     private ListView mLv_history;
     private HistoryDao mDao = new HistoryDao();
 
+    public HistoryCardHolder(Activity activity) {
+        super(activity);
+    }
+
     @Override
     public View initView() {
         View view = UIUtils.inflate(R.layout.card_history_list_home);
@@ -30,13 +35,18 @@ public class HistoryCardHolder extends BaseHolder<ArrayList<HistoryItemBean>> {
 
     @Override
     public void onRefresh(ArrayList<HistoryItemBean> data) {
-        //设置适配器
-        mLv_history.setAdapter(new MyBaseAdapter<HistoryItemBean>(data) {
-            @Override
-            public BaseHolder<HistoryItemBean> getHolder() {
-                return new HistoryItemHolder();
-            }
-        });
+        if (data == null)  {
+            mLv_history.setVisibility(View.GONE);
+        }else{
+            //设置适配器
+            mLv_history.setAdapter(new MyBaseAdapter<HistoryItemBean>(data) {
+                @Override
+                public BaseHolder<HistoryItemBean> getHolder() {
+                    return new HistoryItemHolder(getActivity());
+                }
+            });
+            mLv_history.setVisibility(View.VISIBLE);
+        }
     }
 
     public void initData(int i) {

@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,12 +20,17 @@ public class HomeBottomHolder extends BaseHolder<Integer> implements TransServic
     public static final int SHOW_WAITING = 1;
     public static final int SHOW_RESULT = 2;
     public static final int SHOW_ERROR = 3;
+    public static final int SHOW_NONE = 4;//首次沒有历史记录可以显示，留白
     private TransService mService;
 
     private View mWaiting;
     private ResultCardHolder mResultHolder;
     private HistoryCardHolder mHistoryHolder;
     private View mErrorPager;
+
+    public HomeBottomHolder(Activity activity) {
+        super(activity);
+    }
 
 
     @Override
@@ -40,9 +46,9 @@ public class HomeBottomHolder extends BaseHolder<Integer> implements TransServic
         //进度条
         mWaiting = UIUtils.inflate(R.layout.card_wating_home);
         //结果卡片
-        mResultHolder = new ResultCardHolder();
+        mResultHolder = new ResultCardHolder(getActivity());
         //历史记录
-        mHistoryHolder = new HistoryCardHolder();
+        mHistoryHolder = new HistoryCardHolder(getActivity());
         mHistoryHolder.initData(0);
         //网络异常
         mErrorPager = UIUtils.inflate(R.layout.card_no_net_work);
@@ -64,6 +70,7 @@ public class HomeBottomHolder extends BaseHolder<Integer> implements TransServic
         mHistoryHolder.getRootView().setVisibility(View.INVISIBLE);
         mErrorPager.setVisibility(View.INVISIBLE);
     }
+
     @Override
     public void onRefresh(final Integer state) {
         UIUtils.runOnMainThread(new Runnable() {
@@ -76,8 +83,10 @@ public class HomeBottomHolder extends BaseHolder<Integer> implements TransServic
             }
         });
     }
+
     @Override
     public void afterTranslate(TranslateBean transInfo) {
+
         //初次进入应用，未进行有效翻译，显示历史卡片
         if (!TextUtils.isEmpty(transInfo.toWord)) {
             setData(SHOW_RESULT);

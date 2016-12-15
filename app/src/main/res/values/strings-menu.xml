@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_home">首页</string>
+    <string name="menu_mark">好词好句</string>
+    <string name="menu_msg_trans">短信翻译</string>
+    <string name="menu_setting">设置</string>
+    <string name="menu_about">关于与反馈</string>
+</resources>

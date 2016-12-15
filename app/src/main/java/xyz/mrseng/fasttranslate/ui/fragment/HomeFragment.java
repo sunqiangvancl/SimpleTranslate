@@ -38,17 +38,17 @@ public class HomeFragment extends Fragment {
     private void initWidget(View view) {
         //top bar
         mFl_top = (FrameLayout) view.findViewById(R.id.fl_top_home);
-        mLangHolder = new LangHolder();
+        mLangHolder = new LangHolder(getActivity());
         mFl_top.addView(mLangHolder.getRootView());
 
         //center
         mFl_center = (FrameLayout) view.findViewById(R.id.fl_center_home);
-        mInputHolder = new InputHolder();
+        mInputHolder = new InputHolder(getActivity());
         mFl_center.addView(mInputHolder.getRootView());
 
         //bottom
         mFl_bottom = (FrameLayout) view.findViewById(R.id.fl_bottom_home);
-        mBottomHolder = new HomeBottomHolder();
+        mBottomHolder = new HomeBottomHolder(getActivity());
         mFl_bottom.addView(mBottomHolder.getRootView());
     }
 }

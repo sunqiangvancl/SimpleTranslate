@@ -1,5 +1,6 @@
 package xyz.mrseng.fasttranslate.ui.holder;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
@@ -32,6 +33,10 @@ public class LangHolder extends BaseHolder<LanguageBean> {
     private RotateAnimation mAnim_rotate;
     private TranslateAnimation mAnim_toRight;
     private TranslateAnimation mAnim_toLeft;
+
+    public LangHolder(Activity activity) {
+        super(activity);
+    }
 
     @Override
     public View initView() {
@@ -158,8 +163,8 @@ public class LangHolder extends BaseHolder<LanguageBean> {
         final String[] from_items = UIUtils.getStringArray(R.array.lang_word);
         final String[] to_items = getToItems(from_items);
         //adapter
-        ArrayAdapter rightAdapter = new ArrayAdapter<>(getContext(), R.layout.item_spinner_right, to_items);
-        ArrayAdapter leftAdapter = new ArrayAdapter<>(getContext(), R.layout.item_spinner_left, to_items);
+        ArrayAdapter rightAdapter = new ArrayAdapter<>(UIUtils.getContext(), R.layout.item_spinner_right, to_items);
+        ArrayAdapter leftAdapter = new ArrayAdapter<>(UIUtils.getContext(), R.layout.item_spinner_left, to_items);
         rightAdapter.setDropDownViewResource(R.layout.item_spinner_list);
         leftAdapter.setDropDownViewResource(R.layout.item_spinner_list);
         mSp_right.setAdapter(rightAdapter);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_enable_click_trans">点按翻译</string>
+    <string name="setting_show_notice">显示通知</string>
+    <string name="setting_first_lang">首选语言</string>
+    <string name="setting_output_voice">自动朗读译文</string>
+    <string name="setting_enable_trans_now">实时翻译</string>
+
+</resources>

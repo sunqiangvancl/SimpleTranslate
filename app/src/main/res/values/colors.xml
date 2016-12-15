@@ -6,8 +6,10 @@
     <color name="black_overlay">#66000000</color>
     <color name="deep_gray">#661d1d1d</color>
     <color name="black">#000000</color>
+    <color name="icon_gray">#606060</color>
     <color name="white">#fff</color>
     <color name="light_gray">#c4c4c4</color>
     <color name="light_250">#fafafa</color>
+    <color name="light_240">#f0f0f0</color>
 
 </resources>

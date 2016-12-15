@@ -49,6 +49,11 @@ public class UIUtils {
         return getContext().getResources().getString(id);
     }
 
+    /** 获取数字 */
+    public static Integer getInteger(int id) {
+        return getContext().getResources().getInteger(id);
+    }
+
 
     /** 获取图片 */
     public static Drawable getDrawable(int id) {
@@ -99,4 +104,12 @@ public class UIUtils {
     }
 
 
+    //获取颜色
+    public static int getColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getContext().getResources().getColor(id, null);
+        } else {
+            return getContext().getResources().getColor(id);
+        }
+    }
 }

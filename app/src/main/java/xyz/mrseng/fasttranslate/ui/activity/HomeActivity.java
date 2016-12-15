@@ -1,16 +1,18 @@
 package xyz.mrseng.fasttranslate.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.ui.activity.base.BaseAppCompatActivity;
 import xyz.mrseng.fasttranslate.ui.fragment.HomeFragment;
+import xyz.mrseng.fasttranslate.ui.holder.LeftCardHolder;
 import xyz.mrseng.fasttranslate.utils.ActivityUtils;
 
 /**
@@ -21,54 +23,68 @@ public class HomeActivity extends BaseAppCompatActivity {
 
     private DrawerLayout mDl;
     private ActionBarDrawerToggle mToggle;
+    private android.support.v7.app.ActionBarDrawerToggle togglev7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mDl = (DrawerLayout) findViewById(R.id.ml_home);
+        //主内容fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fl_home, new HomeFragment()).commit();
+        //侧边栏
+        FrameLayout mFl_menu = (FrameLayout) findViewById(R.id.fl_left_menu);
+        LeftCardHolder leftHolder = new LeftCardHolder(this);
+        mFl_menu.removeAllViews();
+        mFl_menu.addView(leftHolder.getRootView());
+
+        //actionbar
         initActionBar();
     }
 
 
     @Override
     public void finish() {
-        super.finish();
-        ActivityUtils.getNewInstance().exit();
+        //侧边栏没关闭应该先关闭侧边栏
+        if (mDl.isDrawerOpen(Gravity.LEFT)) {
+            closeDrawer();
+        } else {
+            super.finish();
+            ActivityUtils.getNewInstance().exit();
+        }
     }
 
-    //actionbar
+    //actionbar和侧边栏
     private void initActionBar() {
+        //这三行代码可以是左侧边栏显示成菜单图标
         ActionBar bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(true);
 
-        bar.setHomeButtonEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);//显示返回箭头,当与侧边栏绑定后显示侧边栏图标
-
-        //初始化侧边栏开关
-        mToggle = new
-                ActionBarDrawerToggle(this, mDl, R.drawable.ic_menu_white, R.string.drawer_open, R.string.drawer_close);
+        mToggle = new ActionBarDrawerToggle(this, mDl, R.string.drawer_open, R.string.drawer_close);
         mToggle.syncState();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu, menu);
-        super.onCreateOptionsMenu(menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_text:
-                Toast.makeText(this, "MenuTest", Toast.LENGTH_SHORT).show();
-                break;
             case android.R.id.home:
                 mToggle.onOptionsItemSelected(item);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    /** 关闭抽屉 */
+    public void closeDrawer() {
+        mDl.closeDrawer(Gravity.LEFT);
+    }
+
+
 }

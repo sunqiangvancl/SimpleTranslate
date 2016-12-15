@@ -4,20 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <!--科大讯飞所需权限-->
-    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <!-- 科大讯飞所需权限 -->
+    <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!--读取网络信息状态 -->
+    <!-- 读取网络信息状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--获取当前wifi状态 -->
+    <!-- 获取当前wifi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--允许程序改变网络连接状态 -->
+    <!-- 允许程序改变网络连接状态 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <!--读取手机信息权限 -->
+    <!-- 读取手机信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--读取联系人权限，上传联系人需要用到此权限 -->
+    <!-- 读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
 
     <application
         android:name=".global.MyApplication"
@@ -26,12 +25,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:icon="@drawable/logo_translate"
             android:label="@string/app_name"
-            android:icon="@drawable/ic_camera_black"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -39,8 +37,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity"
-                  android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+        <activity android:name=".ui.activity.menu.MarkedActivity">
+        </activity>
+        <activity android:name=".ui.activity.menu.MsgActivity">
+        </activity>
+        <activity android:name=".ui.activity.menu.SettingActivity">
+        </activity>
+        <activity android:name=".ui.activity.menu.AboutActivity">
         </activity>
     </application>
 

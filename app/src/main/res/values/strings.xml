@@ -5,47 +5,26 @@
     <string name="conDes_logo">图片logo</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
     <string name="hint_et_pleaseInput">点击即可输入文本</string>
     <string name="copy_success">复制成功！</string>
-    <!--语言-->
-    <string-array name="lang_word">
-        <item>自动检测</item>
-        <item>中文</item>
-        <item>英语</item>
-        <item>粤语</item>
-        <item>文言文</item>
-        <item>日语</item>
-        <item>韩语</item>
-        <item>法语</item>
-        <item>西班牙语</item>
-        <item>繁体中文</item>
-        <item>阿拉伯语</item>
-        <item>俄语</item>
-        <item>葡萄牙语</item>
-        <item>德语</item>
-        <item>意大利语</item>
-    </string-array>
-    <string-array name="lang_code">
-        <item>auto</item>
-        <item>zh</item>
-        <item>en</item>
-        <item>yue</item>
-        <item>wyw</item>
-        <item>jp</item>
-        <item>kor</item>
-        <item>fra</item>
-        <item>spa</item>
-        <item>cht</item>
-        <item>ara</item>
-        <item>ru</item>
-        <item>pt</item>
-        <item>de</item>
-        <item>it</item>
-    </string-array>
-
     <string name="app_id_baidu">20161212000033857</string>
     <string name="securityKey">PI_Y82S5vTmv97a7ONmU</string>
     <string name="no_net">轻触重新加载</string>
     <string name="trans_now">即时翻译</string>
+    <string name="app_protocol">《<u>使用条款</u>》</string>
+    <string name="app_author">小强荣誉出品</string>
+    <string name="copyright">Copyright© MrSeng. All Rights Reserved</string>
+
+    <!--关于页面的列表展示-->
+    <string name="about_feature">功能介绍</string>
+    <string name="about_help">帮助与反馈</string>
+    <string name="about_new">版本更新</string>
+    <string name="about_give">捐助改进</string>
+    <string name="about_follow">关注作者</string>
+    <string name="about_feature_url">功能介绍</string>
+    <string name="about_help_url">帮助与反馈</string>
+    <string name="about_new_url">版本更新</string>
+    <string name="about_give_url">捐助改进</string>
+    <string name="about_follow_url">关注作者</string>
+
 </resources>
