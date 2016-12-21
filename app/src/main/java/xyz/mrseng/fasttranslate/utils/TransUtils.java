@@ -16,7 +16,7 @@ public class TransUtils {
 
     /** 给出Word，得到code，给出code得到Word */
     public static String switchCodeAndWord(Context context, String wordOrCode) {
-        String[] words = context.getResources().getStringArray(R.array.lang_word);
+        String[] words = context.getResources().getStringArray(R.array.lang_name);
         String[] codes = context.getResources().getStringArray(R.array.lang_code);
         if (words.length == codes.length) {
             for (int i = 0; i < words.length; i++) {

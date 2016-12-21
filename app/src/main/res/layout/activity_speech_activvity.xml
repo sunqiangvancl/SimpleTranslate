@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_speech_activvity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="xyz.mrseng.fasttranslate.ui.activity.SpeechActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_240"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_from_speech"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="English"
+            android:textColor="@drawable/selector_text_white_red"
+            android:textSize="22sp"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="75dp"
+            android:layout_height="70dp">
+            <ImageView
+                android:id="@+id/iv_speech"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/selector_bg_red_gray"
+                android:padding="5dp"
+                android:src="@drawable/selector_speech"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_to_speech"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="English"
+            android:textColor="@drawable/selector_text_white_red"
+            android:textSize="22sp"/>
+
+
+    </LinearLayout>
+</LinearLayout>

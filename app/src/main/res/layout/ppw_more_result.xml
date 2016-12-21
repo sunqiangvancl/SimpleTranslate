@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:background="@drawable/bg_card_4"
+              android:gravity="center"
+              android:orientation="vertical">
+
+
+    <ListView
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:id="@+id/lv_more_pup_result"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

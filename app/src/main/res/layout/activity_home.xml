@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/ml_home"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_240"
+    android:id="@+id/dl_home_left"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="xyz.mrseng.fasttranslate.ui.activity.HomeActivity">
+    android:layout_height="match_parent">
 
-
-    <FrameLayout
-        android:id="@+id/fl_home"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="xyz.mrseng.fasttranslate.ui.activity.HomeActivity"
+        >
 
+        <LinearLayout
+            android:id="@+id/activity_trans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <FrameLayout
+                android:id="@+id/fl_top_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:id="@+id/fl_center_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_bottom_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     <!--侧边栏-->
     <FrameLayout
         android:id="@+id/fl_left_menu"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:background="@color/light_250"
         android:layout_gravity="start"
+        android:background="@color/light_250"
         />
-
 </android.support.v4.widget.DrawerLayout>

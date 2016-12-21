@@ -8,7 +8,7 @@
     android:background="@color/light_240"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="xyz.mrseng.fasttranslate.ui.activity.menu.AboutActivity">
+    tools:context="xyz.mrseng.fasttranslate.ui.activity.AboutActivity">
 
     <ImageView
         android:layout_width="100dp"
@@ -17,6 +17,7 @@
         android:src="@drawable/logo_translate"/>
 
     <TextView
+        android:id="@+id/tv_version_about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

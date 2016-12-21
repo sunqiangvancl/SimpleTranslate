@@ -41,13 +41,17 @@
             android:name=".ui.activity.HomeActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
-        <activity android:name=".ui.activity.menu.MarkedActivity">
+        <activity android:name=".ui.activity.MarkedActivity">
         </activity>
-        <activity android:name=".ui.activity.menu.MsgActivity">
+        <activity android:name=".ui.activity.MsgActivity">
         </activity>
-        <activity android:name=".ui.activity.menu.SettingActivity">
+        <activity android:name=".ui.activity.SettingActivity">
         </activity>
-        <activity android:name=".ui.activity.menu.AboutActivity">
+        <activity android:name=".ui.activity.AboutActivity">
+        </activity>
+        <activity android:name=".ui.activity.WebViewActivity">
+        </activity>
+        <activity android:name=".ui.activity.SpeechActivity">
         </activity>
     </application>
 

@@ -1,10 +1,14 @@
 package xyz.mrseng.fasttranslate.service;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 
-import xyz.mrseng.fasttranslate.domain.TranslateBean;
+import xyz.mrseng.fasttranslate.domain.TransBean;
+import xyz.mrseng.fasttranslate.global.Canstant;
 import xyz.mrseng.fasttranslate.global.ThreadManager;
 import xyz.mrseng.fasttranslate.service.protocol.BDTransProtocol;
+import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
  * Created by MrSeng on 2016/12/13.
@@ -25,44 +29,69 @@ public class TransService {
     private TransService() {
     }
 
-    private TranslateBean mTransBean = new TranslateBean();
-
-    public void setLanguage(String fromCode, String toCode) {
-        mTransBean.toCode = toCode;
-        mTransBean.fromCode = fromCode;
-    }
-
-    public void setText(String text) {
-        this.mTransBean.fromWord = text;
-    }
-
-    public void doTranslate() {
-        ThreadManager.executeOnSingleThread(new Runnable() {
+    public void doTranslate(final TransBean transInfo) {
+        ThreadManager.executeOnTransThread(new Runnable() {
             @Override
             public void run() {
-                notifyBeforeTranslate(mTransBean);
-                TranslateBean data = mBdProtocol.getData(mTransBean.fromWord, mTransBean.fromCode, mTransBean.toCode);
-                if (data != null) {
-                    mTransBean = data;
-                }else{
-                    mTransBean.toWord = null;
+                if (transInfo.fromWord == null) {
+                    doTransByLocal(transInfo);
+                    return;
+                } else {
+                    transInfo.fromWord = transInfo.fromWord.trim();
+                    if (TextUtils.isEmpty(transInfo.fromWord)) {
+                        doTransByLocal(transInfo);
+                        return;
+                    }
                 }
-                notifyAfterTranslate(mTransBean);
+                //需要从网络上翻译
+                if (transInfo.token == Canstant.TOKEN_NET) {
+                    doTransFromNet(transInfo);
+                } else {//载入本地翻译数据
 
+                    doTransByLocal(transInfo);
+                }
             }
         });
     }
 
-    private void notifyBeforeTranslate(TranslateBean mTransBean) {
-        for (int i = 0; i < mListenerList.size(); i++) {
-            mListenerList.get(i).beforeTranslate(mTransBean);
+    private void doTransByLocal(TransBean transInfo) {
+        notifyBeforeTranslate(transInfo);
+        notifyAfterTranslate(transInfo);
+    }
+
+
+    private void doTransFromNet(TransBean transInfo) {
+        notifyBeforeTranslate(transInfo);
+        TransBean transResult = mBdProtocol.getData(transInfo.fromWord, transInfo.fromCode, transInfo.toCode);
+        if (transResult != null) {
+            transResult.token = transInfo.token;
+            notifyAfterTranslate(transResult);
+        } else {
+            transInfo.toWord = null;
+            notifyAfterTranslate(transInfo);
         }
     }
 
-    private void notifyAfterTranslate(TranslateBean mTransBean) {
-        for (int i = 0; i < mListenerList.size(); i++) {
-            mListenerList.get(i).afterTranslate(mTransBean);
-        }
+    private void notifyBeforeTranslate(final TransBean mTransBean) {
+        UIUtils.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < mListenerList.size(); i++) {
+                    mListenerList.get(i).beforeTrans(mTransBean);
+                }
+            }
+        });
+    }
+
+    private void notifyAfterTranslate(final TransBean mTransBean) {
+        UIUtils.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < mListenerList.size(); i++) {
+                    mListenerList.get(i).afterTrans(mTransBean);
+                }
+            }
+        });
     }
 
     //监听队列
@@ -76,17 +105,16 @@ public class TransService {
     }
 
     //注册监听
-    public void addTranslateListener(TranslateListener listener) {
+    public void addTransListener(TranslateListener listener) {
         if (listener != null && !mListenerList.contains(listener)) {
             mListenerList.add(listener);
         }
     }
 
-    public abstract interface TranslateListener {
-        void afterTranslate(TranslateBean transInfo);
+    public interface TranslateListener {
+        void afterTrans(TransBean transInfo);
 
-
-        void beforeTranslate(TranslateBean transInfo);
+        void beforeTrans(TransBean transInfo);
     }
 
 }

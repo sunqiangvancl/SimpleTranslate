@@ -10,8 +10,7 @@ import java.util.ArrayList;
 
 import xyz.mrseng.fasttranslate.domain.ResultToBean;
 import xyz.mrseng.fasttranslate.domain.TranslateBean;
-import xyz.mrseng.fasttranslate.global.exception.NetworkDisabledException;
-import xyz.mrseng.fasttranslate.service.TransApi;
+import xyz.mrseng.fasttranslate.service.baidu.TransApi;
 
 /**
  * Created by MrSeng on 2016/12/13.

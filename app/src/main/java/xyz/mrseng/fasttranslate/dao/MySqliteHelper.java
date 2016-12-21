@@ -13,6 +13,7 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  */
 
 public class MySqliteHelper extends SQLiteOpenHelper {
+
     public MySqliteHelper(String name) {
         super(UIUtils.getContext(), name, null, 1);
     }

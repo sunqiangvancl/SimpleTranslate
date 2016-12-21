@@ -1,6 +1,7 @@
 <resources>
 
-    <!-- Base application theme. -->
+
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -10,13 +11,11 @@
         <!--<item name="android:windowAnimationStyle">@style/winAnim</item>
         -->
         <!---->
-        <item name="colorControlActivated">@color/colorPrimary</item>
-        <!-- 关闭时的拇指按钮的颜色 -->
+       <!-- <item name="colorControlActivated">@color/colorPrimary</item>
+        &lt;!&ndash; 关闭时的拇指按钮的颜色 &ndash;&gt;
         <item name="colorSwitchThumbNormal">@color/black</item>
-        <!-- witch关闭时的轨迹的颜色  30%这个颜色 -->
-        <item name="android:colorForeground">@color/deep_gray</item>
-
-
+        &lt;!&ndash; witch关闭时的轨迹的颜色  30%这个颜色 &ndash;&gt;
+        <item name="android:colorForeground">@color/deep_gray</item>-->
     </style>
 
     <!--设置activity动画-->
@@ -49,4 +48,7 @@
         <!-- witch关闭时的轨迹的颜色  30%这个颜色 -->
         <item name="android:colorForeground">@color/deep_gray</item>
     </style>
+
+
+
 </resources>

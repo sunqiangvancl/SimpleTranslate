@@ -11,5 +11,8 @@
     <color name="light_gray">#c4c4c4</color>
     <color name="light_250">#fafafa</color>
     <color name="light_240">#f0f0f0</color>
+    <color name="light_230">#e6e6e6</color>
+    <color name="light_220">#dcdcdc</color>
+    <color name="red">#ff0000</color>
 
 </resources>

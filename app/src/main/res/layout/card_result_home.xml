@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_audio_play"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/audio_play"
+                />
+
+            <TextView
+                android:id="@+id/tv_audio_lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_audio_play"
+                android:text="英语"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_mark_result"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_star_white"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_result_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_on_offline"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_online_white_24dp"/>
+
+            <TextView
+                android:id="@+id/tv_from_site"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_on_offline"
+                android:text="@string/on_line"
+                android:textColor="@color/light_gray"/>
+
+            <ImageView
+                android:id="@+id/iv_more_result"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_more_vert_white_24"
+                />
+            <ImageView
+                android:id="@+id/iv_copy_result"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@id/iv_more_result"
+                android:src="@drawable/ic_copy_white"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-import xyz.mrseng.fasttranslate.dao.HistoryDao;
-import xyz.mrseng.fasttranslate.domain.HistoryItemBean;
+import xyz.mrseng.fasttranslate.dao.TransDao;
+import xyz.mrseng.fasttranslate.domain.TransBean;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,8 +33,8 @@ public class ExampleInstrumentedTest {
     @Test
     public void testDb() {
         Context context = InstrumentationRegistry.getTargetContext();
-        HistoryDao dao = new HistoryDao(context);
-        HistoryItemBean bean = new HistoryItemBean();
+        TransDao dao = new TransDao(context);
+        TransBean bean = new TransBean();
         for (int i = 0; i < 100; i++) {
             bean.marked = i % 3 == 0 ? 1 : 0;
             bean.fromCode = "zh";
@@ -44,7 +44,7 @@ public class ExampleInstrumentedTest {
             bean.time = System.currentTimeMillis();
             dao.insert(bean);
         }
-        ArrayList<HistoryItemBean> list = dao.queryMarkedList(0);
+        ArrayList<TransBean> list = dao.queryMarkedList(0);
         bean = dao.queryOne(60);
         bean.marked = 1;
         dao.update(bean);

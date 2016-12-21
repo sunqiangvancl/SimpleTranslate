@@ -15,9 +15,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import xyz.mrseng.fasttranslate.R;
-import xyz.mrseng.fasttranslate.domain.LanguageBean;
-import xyz.mrseng.fasttranslate.global.ThreadManager;
+import xyz.mrseng.fasttranslate.domain.TransBean;
+import xyz.mrseng.fasttranslate.global.Canstant;
 import xyz.mrseng.fasttranslate.service.TransService;
+import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
+import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
+import xyz.mrseng.fasttranslate.utils.SPUtils;
 import xyz.mrseng.fasttranslate.utils.TransUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
@@ -26,13 +29,15 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  * 顶部语言选项的逻辑执行者
  */
 
-public class LangHolder extends BaseHolder<LanguageBean> {
+public class LangHolder extends BaseHolder<TransBean> {
     private Spinner mSp_left;
     private Spinner mSp_right;
     private ImageView mIv_switch;
     private RotateAnimation mAnim_rotate;
     private TranslateAnimation mAnim_toRight;
     private TranslateAnimation mAnim_toLeft;
+    private HomeActivity homeActivity;
+
 
     public LangHolder(Activity activity) {
         super(activity);
@@ -40,15 +45,38 @@ public class LangHolder extends BaseHolder<LanguageBean> {
 
     @Override
     public View initView() {
-        mService = TransService.getNewInstance();
-        View view = UIUtils.inflate(R.layout.bar_language_bar);
+        homeActivity = (HomeActivity) getActivity();
+        View view = UIUtils.inflate(R.layout.card_language_home);
         mSp_left = (Spinner) view.findViewById(R.id.sp_trans_left);
         mSp_right = (Spinner) view.findViewById(R.id.sp_trans_right);
         mIv_switch = (ImageView) view.findViewById(R.id.iv_switch);
         initSpinner();
         initImageView();
         initAnim();
+        initListener();
         return view;
+    }
+
+    private void initListener() {
+        homeActivity.getTransService().addTransListener(new TransService.TranslateListener() {
+            @Override
+            public void afterTrans(TransBean transInfo) {
+                if (transInfo.fromCode != null) {
+                    getData().fromCode = transInfo.fromCode;
+                }
+                if (transInfo.toCode != null) {
+                    getData().toCode = transInfo.toCode;
+                }
+                onRefresh(getData());
+            }
+
+            @Override
+            public void beforeTrans(TransBean transInfo) {
+
+            }
+        });
+
+
     }
 
 
@@ -66,8 +94,9 @@ public class LangHolder extends BaseHolder<LanguageBean> {
         });
     }
 
+    /*交换语言*/
     private void swapLang() {
-        getData().swapFromTo();
+        getData().swapFromToCode();
         int cnt_l = mSp_left.getAdapter().getCount();
         int cnt_r = mSp_right.getAdapter().getCount();
         int sel_l = 0;
@@ -86,7 +115,6 @@ public class LangHolder extends BaseHolder<LanguageBean> {
         }
         mSp_left.setSelection(sel_l);
         mSp_right.setSelection(sel_r);
-
     }
 
 
@@ -129,6 +157,17 @@ public class LangHolder extends BaseHolder<LanguageBean> {
 
     private boolean isAniming = false;//标记是否正在执行动画
 
+    public void onActivityResume() {
+        //初始化code,保持此holder的data与Activity的data是同一个对象
+        TransBean data = homeActivity.getTransInfo();
+        data.fromCode = SPUtils.getString(SPUtils.KEY_FIRST_FROM_CODE, TransBean.getLangCodeStr(TransBean.LANG_CODE_AUTO));
+        data.toCode = SPUtils.getString(SPUtils.KEY_FIRST_TO_CODE, TransBean.getLangCodeStr(TransBean.LANG_CODE_EN));
+//        mSp_left.setSelection(TransBean.getCodeIntByCodeStr(data.fromCode));
+//        mSp_right.setSelection(TransBean.getCodeIntByCodeStr(data.toCode) - 1);
+        setData(data);//更新显示
+        homeActivity.setTransInfo(data);
+    }
+
     class MyAnimListener implements Animation.AnimationListener {
         @Override
         public void onAnimationStart(Animation animation) {
@@ -148,23 +187,23 @@ public class LangHolder extends BaseHolder<LanguageBean> {
 
 
     @Override
-    public void onRefresh(LanguageBean data) {
-        mService.setLanguage(data.fromCode,data.toCode);
-        ThreadManager.executeOnSingleThread(new Runnable() {
-            @Override
-            public void run() {
-                mService.doTranslate();
-            }
-        });
+    public void onRefresh(TransBean data) {
+        if (data.token!=null && data.token == Canstant.TOKEN_NET){
+            homeActivity.setTransInfo(getData());
+        }
+        mSp_left.setSelection(TransBean.getCodeIntByCodeStr(data.fromCode));
+        mSp_right.setSelection(TransBean.getCodeIntByCodeStr(data.toCode) - 1);
+//        homeActivity.getTransInfo().token = Canstant.TOKEN_NET;
     }
 
     private void initSpinner() {
         //数据
-        final String[] from_items = UIUtils.getStringArray(R.array.lang_word);
+        final String[] from_items = UIUtils.getStringArray(R.array.lang_name);
         final String[] to_items = getToItems(from_items);
         //adapter
+        //TODO 左侧选中的哪个语言，右侧该语言就不应出现在列表中，即动态控制语言列表
         ArrayAdapter rightAdapter = new ArrayAdapter<>(UIUtils.getContext(), R.layout.item_spinner_right, to_items);
-        ArrayAdapter leftAdapter = new ArrayAdapter<>(UIUtils.getContext(), R.layout.item_spinner_left, to_items);
+        ArrayAdapter leftAdapter = new ArrayAdapter<>(UIUtils.getContext(), R.layout.item_spinner_left, from_items);
         rightAdapter.setDropDownViewResource(R.layout.item_spinner_list);
         leftAdapter.setDropDownViewResource(R.layout.item_spinner_list);
         mSp_right.setAdapter(rightAdapter);
@@ -179,11 +218,7 @@ public class LangHolder extends BaseHolder<LanguageBean> {
         //侦听
         mSp_left.setOnItemSelectedListener(new MyOnItemSelectedListener(true));
         mSp_right.setOnItemSelectedListener(new MyOnItemSelectedListener(false));
-        //初始化code
-        LanguageBean data = new LanguageBean();
-        data.fromCode = TransUtils.switchCodeAndWord((String) mSp_left.getSelectedItem());
-        data.toCode = TransUtils.switchCodeAndWord((String) mSp_right.getSelectedItem());
-        setData(data);
+
     }
 
     @NonNull
@@ -192,6 +227,7 @@ public class LangHolder extends BaseHolder<LanguageBean> {
         list.addAll(Arrays.asList(from_items).subList(1, from_items.length));
         return list.toArray(new String[0]);
     }
+
 
     private class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
         private boolean isLeft;
@@ -202,12 +238,26 @@ public class LangHolder extends BaseHolder<LanguageBean> {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            boolean needTrans = false;
             if (isLeft) {
-                getData().fromCode = TransUtils.switchCodeAndWord((String) mSp_left.getSelectedItem());
+                String fromCode = TransUtils.switchCodeAndWord((String) mSp_left.getSelectedItem());
+                if (fromCode != null && !fromCode.equals(getData().fromCode)) {
+                    getData().fromCode = fromCode;
+                    needTrans = true;
+                }
             } else {
-                getData().toCode = TransUtils.switchCodeAndWord((String) mSp_right.getSelectedItem());
+                String toCode = TransUtils.switchCodeAndWord((String) mSp_right.getSelectedItem());
+                if (toCode != null && !toCode.equals(getData().toCode)) {
+                    getData().toCode = toCode;
+                    needTrans = true;
+                }
             }
-            setData(getData());
+            setData(getData());//更新语言条数据
+            if (needTrans) {
+                homeActivity.getTransInfo().fromCode = getData().fromCode;
+                homeActivity.getTransInfo().toCode = getData().toCode;
+                homeActivity.notifyTransInfoChanged();
+            }
         }
 
         @Override

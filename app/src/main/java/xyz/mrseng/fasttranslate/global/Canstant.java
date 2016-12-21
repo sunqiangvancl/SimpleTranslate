@@ -21,4 +21,11 @@ public interface Canstant {
 
 
     int REQ_CODE_START_TRANSACTIVITY = 1;
+    String EXTRA_MARKED = "extra_marked_show";
+    int TOKEN_NET = 1;
+    int TOKEN_LOCAL = 2;
+    String EXTRA_URL = "url";
+    String URL_WEIBO_ME = "http://widget.weibo.com/dialog/follow.php?fuid=3936189034&refer=&language=zh_cn&type=widget_page&vsrc=app_followbutton&backurl=&rnd=1482216051769";
+    long TIME_SPLASH_WAITING = 200;
+    String EXTRA_SPEECH = "extra_speech";
 }

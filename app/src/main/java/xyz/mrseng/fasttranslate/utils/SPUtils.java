@@ -16,6 +16,8 @@ public class SPUtils {
     public static final String KEY_FIRST_TO_CODE = "key_first_to_code";
     public static final String KEY_AUTO_READ = "key_auto_read";
     public static final String KEY_TRANS_NOW = "key_trans_now";
+    public static final String KEY_FROM_SITE = "key_from_site";
+    public static final String KEY_SORT_BY_TIME = "key_sort_by_time";
     private static SharedPreferences sp = UIUtils.getContext().getSharedPreferences(SP_CONFIG, Context.MODE_PRIVATE);
 
     public static Boolean getBoolean(String key, Boolean def) {
@@ -33,6 +35,7 @@ public class SPUtils {
     public static void setString(String key, String val) {
         sp.edit().putString(key, val).apply();//apply是异步的
     }
+
 
 
 }

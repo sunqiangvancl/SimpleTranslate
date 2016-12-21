@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.LeftMenuBean;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
-import xyz.mrseng.fasttranslate.ui.activity.menu.AboutActivity;
-import xyz.mrseng.fasttranslate.ui.activity.menu.MarkedActivity;
-import xyz.mrseng.fasttranslate.ui.activity.menu.MsgActivity;
-import xyz.mrseng.fasttranslate.ui.activity.menu.SettingActivity;
-import xyz.mrseng.fasttranslate.ui.adapter.MyBaseAdapter;
+import xyz.mrseng.fasttranslate.ui.activity.AboutActivity;
+import xyz.mrseng.fasttranslate.ui.activity.MarkedActivity;
+import xyz.mrseng.fasttranslate.ui.activity.MsgActivity;
+import xyz.mrseng.fasttranslate.ui.activity.SettingActivity;
+import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
+import xyz.mrseng.fasttranslate.ui.base.MyBaseAdapter;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**

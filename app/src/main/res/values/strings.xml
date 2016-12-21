@@ -9,8 +9,10 @@
     <string name="copy_success">复制成功！</string>
     <string name="app_id_baidu">20161212000033857</string>
     <string name="securityKey">PI_Y82S5vTmv97a7ONmU</string>
+    <string name="app_key">445721126</string>
     <string name="no_net">轻触重新加载</string>
     <string name="trans_now">即时翻译</string>
+    <string name="now">即时</string>
     <string name="app_protocol">《<u>使用条款</u>》</string>
     <string name="app_author">小强荣誉出品</string>
     <string name="copyright">Copyright© MrSeng. All Rights Reserved</string>
@@ -20,11 +22,54 @@
     <string name="about_help">帮助与反馈</string>
     <string name="about_new">版本更新</string>
     <string name="about_give">捐助改进</string>
-    <string name="about_follow">关注作者</string>
+    <string name="about_author">关于作者</string>
+    <string name="about_source">源码查看(Github)</string>
     <string name="about_feature_url">功能介绍</string>
     <string name="about_help_url">帮助与反馈</string>
     <string name="about_new_url">版本更新</string>
     <string name="about_give_url">捐助改进</string>
     <string name="about_follow_url">关注作者</string>
+    <string name="on_line">来自云端</string>
+    <string name="you_have_no_mark">您还没有保存好词好句，点击翻译结果傍边的星标可将其保存到这里。</string>
+    <string name="github_url">https://github.com/sunqiangvancl/FastTranslate</string>
+
+
+    <!--结果页面的更多选项-->
+    <string name="share">分享</string>
+    <string name="full_screen">全屏</string>
+    <string name="jinshan">金山翻译</string>
+    <string name="youdao">有道翻译</string>
+    <string name="baidu">百度翻译</string>
+    <string name="biying">必应翻译</string>
+    <string name="refresh">刷新</string>
+    <string name="inverse_trans">反相翻译</string>
+    <string name="setting_from_site">翻译来源</string>
+    <string name="please_select_site">请选择翻译网站</string>
+    <string name="trans_to">翻译至</string>
+
+    <!--实时翻译-->
+    <string name="trans_now_opened">实时翻译已打开</string>
+    <string name="trans_now_closed">实时翻译已关闭</string>
+
+
+    <!--提示-->
+    <string name="tips">提示</string>
+    <string name="are_you_sure_to_delete">删除此记录？</string>
+    <string name="ok">我确定</string>
+    <string name="cancel">取消</string>
+    <string name="tips_loading">正在拼命思考中</string>
+
+    <!--付款-->
+    <string name="alipay">支付宝</string>
+    <string name="wechat">微信</string>
+    <string name="curr_version">当前版本：</string>
+    <string name="thinks_for_pay">谢谢捐助</string>
+    <string name="search">搜索</string>
+    <string name="sort">排序</string>
+    <string name="more">更多</string>
+    <string name="sort_by_time">按时间排序</string>
+    <string name="sort_by_abc">按字母排序</string>
+    <string name="speech">语音</string>
+
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--语言-->
-    <string-array name="lang_word">
+    <string-array name="lang_name">
         <item>自动检测</item>
         <item>中文</item>
         <item>英语</item>

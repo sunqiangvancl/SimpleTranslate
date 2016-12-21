@@ -21,7 +21,7 @@ public class ThreadManager {
     }
 
     //翻译类需要单一子线程来实现，可以避免数据错乱
-    public synchronized static void executeOnSingleThread(Runnable run) {
+    public synchronized static void executeOnTransThread(Runnable run) {
         if (myThreadPoolSingle == null) {
             myThreadPoolSingle = new MyThreadPool(1, 1, 20);
         }

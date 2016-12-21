@@ -1,15 +1,14 @@
 package xyz.mrseng.fasttranslate.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
 import xyz.mrseng.fasttranslate.R;
-import xyz.mrseng.fasttranslate.ui.activity.base.BaseActivity;
+import xyz.mrseng.fasttranslate.global.Canstant;
+import xyz.mrseng.fasttranslate.ui.base.BaseActivity;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -31,7 +30,7 @@ public class SplashActivity extends BaseActivity {
         long startTime = System.currentTimeMillis();
         init();//进行初始化操作
         long endTime = System.currentTimeMillis();
-        long rest = 500 - endTime + startTime;
+        long rest = Canstant.TIME_SPLASH_WAITING - endTime + startTime;
         UIUtils.getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {

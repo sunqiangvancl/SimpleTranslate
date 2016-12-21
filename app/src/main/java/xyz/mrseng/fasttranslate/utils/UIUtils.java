@@ -65,6 +65,18 @@ public class UIUtils {
     }
 
 
+    /** dp和px */
+    public static int dp2px(int dp) {
+        float density = getContext().getResources().getDisplayMetrics().density;
+        return (int) (density * dp);
+    }
+
+    public static int px2dp(int px) {
+        float density = getContext().getResources().getDisplayMetrics().density;
+        return (int) (px / density);
+    }
+
+
     /** 是否运行在主线程 */
     public static boolean isRunOnMainThread() {
         return MyApplication.getMainThreadID() == Thread.currentThread().getId();

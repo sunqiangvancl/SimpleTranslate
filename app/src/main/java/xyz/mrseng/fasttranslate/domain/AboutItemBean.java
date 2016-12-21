@@ -10,7 +10,6 @@ public class AboutItemBean {
         this.text = text;
         this.url = url;
     }
-
     public String text;//显示文本
     public String url;
 
