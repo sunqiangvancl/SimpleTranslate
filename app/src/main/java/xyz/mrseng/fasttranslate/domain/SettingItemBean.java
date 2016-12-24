@@ -1,9 +1,12 @@
 package xyz.mrseng.fasttranslate.domain;
 
+import android.widget.Toast;
+
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.ui.activity.SettingActivity;
+import xyz.mrseng.fasttranslate.utils.CommonUtils;
 import xyz.mrseng.fasttranslate.utils.SPUtils;
-import xyz.mrseng.fasttranslate.utils.TransUtils;
+import xyz.mrseng.fasttranslate.utils.ServiceUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -30,12 +33,11 @@ public class SettingItemBean {
                 toggle = SPUtils.getBoolean(key_toggle, false);
                 break;
             case ITEM_FIRST_LANG:
-                String fromCode = SPUtils.getString(SPUtils.KEY_FIRST_FROM_CODE,
-                        UIUtils.getStringArray(R.array.lang_code)[0]);//默认自动检测
-                String fromLang = TransUtils.switchCodeAndWord(fromCode);
+                String fromCode = SPUtils.getFirstFromCode();//默认中文
+                String fromLang = TransBean.switchCodeAndWord(fromCode);
                 String toCode = SPUtils.getString(SPUtils.KEY_FIRST_TO_CODE,
                         UIUtils.getStringArray(R.array.lang_code)[2]);//默认英语
-                String toLang = TransUtils.switchCodeAndWord(toCode);
+                String toLang = TransBean.switchCodeAndWord(toCode);
                 String desc_lang = fromLang + "," + toLang;
                 title = UIUtils.getString(R.string.setting_first_lang);
                 desc = desc_lang;
@@ -79,9 +81,17 @@ public class SettingItemBean {
         if (toggle != null && key_toggle != null) {
             toggle = !toggle;
             SPUtils.setBoolean(key_toggle, toggle);
-            System.out.println("----switch---" + title + "--" + !toggle + "---->" + toggle);
+            if (SPUtils.KEY_ENABLE_CLICK_TRANS.equals(key_toggle)) {
+                if (toggle) {
+                    if (CommonUtils.isGotAppOps()){
+                        ServiceUtils.startClickTransService();
+                    }else {
+                        Toast.makeText(mActivity, "无权限", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    ServiceUtils.stopClickTransService();
+                }
+            }
         }
     }
-
-
 }

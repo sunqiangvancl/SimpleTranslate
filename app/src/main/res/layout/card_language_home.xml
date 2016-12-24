@@ -9,36 +9,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        >
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="horizontal">
 
-
-        <Spinner
-            android:id="@+id/sp_trans_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
             android:layout_weight="1"
+            android:layout_width="0dp"
             android:gravity="left"
-            android:layout_marginLeft="20dp"
-            />
+            android:layout_height="match_parent">
+            <Spinner
+                android:layout_centerVertical="true"
+                android:id="@+id/sp_trans_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/arrow_switch"/>
 
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:layout_height="match_parent">
+
         <Spinner
+            android:layout_centerVertical="true"
             android:id="@+id/sp_trans_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:layout_marginRight="20dp"/>
+            android:gravity="center"
+            />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.AboutItemBean;
 import xyz.mrseng.fasttranslate.global.Canstant;
+import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.base.BaseMenuActivity;
 import xyz.mrseng.fasttranslate.ui.base.MyBaseAdapter;
-import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.holder.PayToMeHolder;
-import xyz.mrseng.fasttranslate.utils.DataUtils;
+import xyz.mrseng.fasttranslate.utils.CommonUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 public class AboutActivity extends BaseMenuActivity {
@@ -30,7 +30,7 @@ public class AboutActivity extends BaseMenuActivity {
         View view = UIUtils.inflate(R.layout.activity_about);
         ListView listView = (ListView) view.findViewById(R.id.lv_about_center);
         TextView tv_version = (TextView) view.findViewById(R.id.tv_version_about);
-        tv_version.setText(UIUtils.getString(R.string.curr_version) + DataUtils.getCurrVersion());
+        tv_version.setText(UIUtils.getString(R.string.curr_version) + CommonUtils.getCurrVersion());
         initListView(listView);
         return view;
     }
@@ -76,16 +76,26 @@ public class AboutActivity extends BaseMenuActivity {
                     showPayToMeDialog();
                 } else if (items.get(position).text.equals(UIUtils.getString(R.string.about_author))) {//关于作者
                     //开启网页，引导关注
-                    Uri weibo = Uri.parse(Canstant.URL_WEIBO_ME);
+                    Uri weibo = Uri.parse(UIUtils.getString(R.string.url_weibo_about_me));
                     Intent intent = new Intent(Intent.ACTION_VIEW, weibo);
                     boolean isIntentSafe = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
                     if (isIntentSafe) {
                         startActivity(intent);
                     }
+                } else if (items.get(position).text.equals(UIUtils.getString(R.string.about_new_version))) {//更新版本
+                    showAlreadNewDialog();
                 }
-                // TODO: 2016/12/20 帮助与反馈，版本更新的点击事件处理
+                // TODO: 2016/12/20 帮助与反馈的点击事件处理
             }
         });
+    }
+
+    /*已经是最新版本的dialog*/
+    private void showAlreadNewDialog() {
+       new  AlertDialog.Builder(this).setTitle(R.string.tips)
+               .setMessage(R.string.alread_is_the_last_version)
+               .setPositiveButton(R.string.ok,null)
+               .show();
     }
 
     /*向我付款的dialog*/
@@ -101,7 +111,7 @@ public class AboutActivity extends BaseMenuActivity {
                 UIUtils.getString(R.string.about_feature_url));
         AboutItemBean help = new AboutItemBean(UIUtils.getString(R.string.about_help),
                 UIUtils.getString(R.string.about_help_url));
-        AboutItemBean getnew = new AboutItemBean(UIUtils.getString(R.string.about_new),
+        AboutItemBean getnew = new AboutItemBean(UIUtils.getString(R.string.about_new_version),
                 UIUtils.getString(R.string.about_new_url));
         AboutItemBean give = new AboutItemBean(UIUtils.getString(R.string.about_give), null);
         AboutItemBean conn = new AboutItemBean(UIUtils.getString(R.string.about_author), null);

@@ -1,4 +1,4 @@
-package xyz.mrseng.fasttranslate.service.baidu;
+package xyz.mrseng.fasttranslate.engine.baidu;
 
 import java.io.File;
 import java.io.FileInputStream;

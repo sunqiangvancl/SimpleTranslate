@@ -67,9 +67,9 @@ public class LeftCardHolder extends BaseHolder<ArrayList<LeftMenuBean>> {
         LeftMenuBean mark = new LeftMenuBean(1, UIUtils.getString(R.string.menu_mark),
                 UIUtils.getDrawable(R.drawable.ic_stars_black_24), MarkedActivity.class);
 
-        //短信翻译
-        LeftMenuBean msg = new LeftMenuBean(2, UIUtils.getString(R.string.menu_msg_trans),
-                UIUtils.getDrawable(R.drawable.ic_textsms_black_24), MsgActivity.class);
+//        //短信翻译
+//        LeftMenuBean msg = new LeftMenuBean(2, UIUtils.getString(R.string.menu_msg_trans),
+//                UIUtils.getDrawable(R.drawable.ic_textsms_black_24), MsgActivity.class);
 
         //设置
         LeftMenuBean setting = new LeftMenuBean(3, UIUtils.getString(R.string.menu_setting),
@@ -83,7 +83,7 @@ public class LeftCardHolder extends BaseHolder<ArrayList<LeftMenuBean>> {
         ArrayList<LeftMenuBean> menuList = new ArrayList<>();
         menuList.add(home);
         menuList.add(mark);
-        menuList.add(msg);
+//        menuList.add(msg);
         menuList.add(setting);
         menuList.add(about);
 

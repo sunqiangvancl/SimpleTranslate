@@ -20,6 +20,9 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
 public class TransBean implements Serializable, Comparable<TransBean> {
     public TransBean() {
         this.site = SPUtils.getString(SPUtils.KEY_FROM_SITE, UIUtils.getString(R.string.baidu));
+        this.token = TransBean.TOKEN_NET;
+        this.fromCode = SPUtils.getFirstFromCode();
+        this.toCode = SPUtils.getFirstToCode();
     }
 
     public String fromCode;
@@ -101,6 +104,10 @@ public class TransBean implements Serializable, Comparable<TransBean> {
     public static final int LANG_CODE_PT = 12;
     public static final int LANG_CODE_DE = 13;
     public static final int LANG_CODE_IT = 14;
+
+
+    public static final int TOKEN_NET = 1;
+    public static final int TOKEN_LOCAL = 2;
 
     public static String getLangCodeStr(int lang_code) {
         return UIUtils.getStringArray(R.array.lang_code)[lang_code];

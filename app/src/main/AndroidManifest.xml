@@ -18,6 +18,8 @@
     <!-- 读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
+    <!--悬浮窗-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
         android:name=".global.MyApplication"
         android:allowBackup="true"
@@ -53,6 +55,12 @@
         </activity>
         <activity android:name=".ui.activity.SpeechActivity">
         </activity>
+
+        <service
+            android:name=".service.ClickTransService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

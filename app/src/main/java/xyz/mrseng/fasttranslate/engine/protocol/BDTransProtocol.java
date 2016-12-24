@@ -1,4 +1,4 @@
-package xyz.mrseng.fasttranslate.service.protocol;
+package xyz.mrseng.fasttranslate.engine.protocol;
 
 import android.text.TextUtils;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import xyz.mrseng.fasttranslate.domain.ResultToBean;
 import xyz.mrseng.fasttranslate.domain.TranslateBean;
-import xyz.mrseng.fasttranslate.service.baidu.TransApi;
+import xyz.mrseng.fasttranslate.engine.baidu.TransApi;
 
 /**
  * Created by MrSeng on 2016/12/13.

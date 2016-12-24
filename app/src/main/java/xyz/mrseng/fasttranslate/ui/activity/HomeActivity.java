@@ -13,12 +13,12 @@ import android.widget.FrameLayout;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
+import xyz.mrseng.fasttranslate.engine.TransService;
 import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.TransService;
 import xyz.mrseng.fasttranslate.ui.base.BaseAppCompatActivity;
 import xyz.mrseng.fasttranslate.ui.holder.HomeBottomHolder;
-import xyz.mrseng.fasttranslate.ui.holder.InputHolder;
-import xyz.mrseng.fasttranslate.ui.holder.LangHolder;
+import xyz.mrseng.fasttranslate.ui.holder.HomeInputHolder;
+import xyz.mrseng.fasttranslate.ui.holder.HomeLangHolder;
 import xyz.mrseng.fasttranslate.ui.holder.LeftCardHolder;
 import xyz.mrseng.fasttranslate.utils.ActivityUtils;
 
@@ -28,15 +28,15 @@ import xyz.mrseng.fasttranslate.utils.ActivityUtils;
  */
 public class HomeActivity extends BaseAppCompatActivity {
 
-    private InputHolder mInputHolder;
-    private LangHolder mLangHolder;
+    private HomeInputHolder mHomeInputHolder;
+    private HomeLangHolder mHomeLangHolder;
     private FrameLayout mFl_bottom;
     private FrameLayout mFl_top;
     private FrameLayout mFl_center;
     private HomeBottomHolder mBottomHolder;
     private DrawerLayout mDl;
     private ActionBarDrawerToggle mToggle;
-    private TransService transService = TransService.getNewInstance();
+    private TransService transService = TransService.getNewInstance(TransService.FLAG_HOME);
 
     //当前翻译的配置信息
     private TransBean mTransInfo = new TransBean();
@@ -47,9 +47,6 @@ public class HomeActivity extends BaseAppCompatActivity {
 
     /** 每当数据改变，就更新翻译 */
     public void setTransInfo(TransBean transInfo) {
-        if (transInfo.token == null) {
-            transInfo.token = Canstant.TOKEN_NET;
-        }
         this.mTransInfo = transInfo;
     }
 
@@ -70,7 +67,6 @@ public class HomeActivity extends BaseAppCompatActivity {
         //主内容fragment
         setContentView(rootView);
         initWidget(rootView);
-        initData();
         //侧边栏
         initLeftMenu();
         initActionBar();
@@ -88,19 +84,19 @@ public class HomeActivity extends BaseAppCompatActivity {
 
         //top bar
         mFl_top = (FrameLayout) view.findViewById(R.id.fl_top_home);
-        mLangHolder = new LangHolder(this);
-        mFl_top.addView(mLangHolder.getRootView());
+        mHomeLangHolder = new HomeLangHolder(this);
+        mFl_top.addView(mHomeLangHolder.getRootView());
 
         //center
         mFl_center = (FrameLayout) view.findViewById(R.id.fl_center_home);
-        mInputHolder = new InputHolder(this);
-        mFl_center.addView(mInputHolder.getRootView());
-        mInputHolder.getEt_Input().setOnClickListener(new View.OnClickListener() {//当用户尝试输入文本，应该隐藏历史记录面板
+        mHomeInputHolder = new HomeInputHolder(this);
+        mFl_center.addView(mHomeInputHolder.getRootView());
+        mHomeInputHolder.getEt_Input().setOnClickListener(new View.OnClickListener() {//当用户尝试输入文本，应该隐藏历史记录面板
             @Override
             public void onClick(View v) {
                 //TODO 当用户打开输入法，没有输入内容，由关闭了输入法，此时应该显示历史记录，而当前无法显示
                 mBottomHolder.setData(HomeBottomHolder.SHOW_NONE);
-                getTransInfo().token = Canstant.TOKEN_NET;
+                getTransInfo().token = TransBean.TOKEN_NET;
             }
         });
 
@@ -111,7 +107,7 @@ public class HomeActivity extends BaseAppCompatActivity {
     }
 
     /** 有肯能是从好词好句Activity条转过来的 */
-    private void initData() {
+    private void resumeData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             TransBean marked = (TransBean) extras.getSerializable(Canstant.EXTRA_MARKED);
@@ -122,7 +118,7 @@ public class HomeActivity extends BaseAppCompatActivity {
                 getTransInfo().toCode = marked.toCode;
                 getTransInfo().toWord = marked.toWord;
                 //提示这个翻译是来自mark页面的
-                getTransInfo().token = Canstant.TOKEN_LOCAL;
+                getTransInfo().token = TransBean.TOKEN_LOCAL;
                 notifyTransInfoChanged();
             }
         }
@@ -178,10 +174,8 @@ public class HomeActivity extends BaseAppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mLangHolder.onActivityResume();
-        mInputHolder.onActivityResume();
-//        mBottomHolder.onActivityResume();
+        resumeData();
+        mHomeLangHolder.onActivityResume();
+        mHomeInputHolder.onActivityResume();
     }
-
-
 }

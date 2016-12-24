@@ -1,13 +1,12 @@
-package xyz.mrseng.fasttranslate.service;
+package xyz.mrseng.fasttranslate.engine;
 
 import android.text.TextUtils;
 
 import java.util.ArrayList;
 
 import xyz.mrseng.fasttranslate.domain.TransBean;
-import xyz.mrseng.fasttranslate.global.Canstant;
+import xyz.mrseng.fasttranslate.engine.protocol.BDTransProtocol;
 import xyz.mrseng.fasttranslate.global.ThreadManager;
-import xyz.mrseng.fasttranslate.service.protocol.BDTransProtocol;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -16,14 +15,27 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  */
 
 public class TransService {
-
+    public static final int FLAG_HOME = 0;
+    public static final int FLAG_VOICE = 1;
+    public static final int FLAG_SIMPLE = 2;
     //百度协议
     private BDTransProtocol mBdProtocol = BDTransProtocol.getNewInstance();
     //单例
-    private static TransService mService = new TransService();
+    private static TransService mHomeService = new TransService();
+    private static TransService mVoiceService = new TransService();
+    private static TransService mSimpleService = new TransService();
 
-    public static TransService getNewInstance() {
-        return mService;
+
+    public static TransService getNewInstance(int flag) {
+        switch (flag) {
+            case FLAG_HOME:
+                return mHomeService;
+            case FLAG_VOICE:
+                return mVoiceService;
+            case FLAG_SIMPLE:
+                return mSimpleService;
+        }
+        return mHomeService;
     }
 
     private TransService() {
@@ -34,20 +46,21 @@ public class TransService {
             @Override
             public void run() {
                 if (transInfo.fromWord == null) {
+                    transInfo.toWord = null;
                     doTransByLocal(transInfo);
                     return;
                 } else {
                     transInfo.fromWord = transInfo.fromWord.trim();
                     if (TextUtils.isEmpty(transInfo.fromWord)) {
+                        transInfo.toWord = "";
                         doTransByLocal(transInfo);
                         return;
                     }
                 }
                 //需要从网络上翻译
-                if (transInfo.token == Canstant.TOKEN_NET) {
+                if (transInfo.token == TransBean.TOKEN_NET) {
                     doTransFromNet(transInfo);
                 } else {//载入本地翻译数据
-
                     doTransByLocal(transInfo);
                 }
             }
@@ -64,7 +77,7 @@ public class TransService {
         notifyBeforeTranslate(transInfo);
         TransBean transResult = mBdProtocol.getData(transInfo.fromWord, transInfo.fromCode, transInfo.toCode);
         if (transResult != null) {
-            transResult.token = transInfo.token;
+            transResult.token = TransBean.TOKEN_NET;
             notifyAfterTranslate(transResult);
         } else {
             transInfo.toWord = null;

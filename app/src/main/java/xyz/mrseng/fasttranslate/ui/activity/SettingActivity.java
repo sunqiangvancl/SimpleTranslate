@@ -15,11 +15,13 @@ import java.util.Map;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.SettingItemBean;
+import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.base.BaseMenuActivity;
 import xyz.mrseng.fasttranslate.ui.base.MyBaseAdapter;
-import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.holder.LangDialogHolder;
+import xyz.mrseng.fasttranslate.utils.CommonUtils;
 import xyz.mrseng.fasttranslate.utils.SPUtils;
+import xyz.mrseng.fasttranslate.utils.ServiceUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -27,6 +29,7 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  */
 public class SettingActivity extends BaseMenuActivity {
 
+    private static final int CODE_REQ_FLOAT_PERM = 0;
     private ArrayList<SettingItemBean> mData;
     private SettingItemBean mItemClick;
     private SettingItemBean mItemNotice;
@@ -71,6 +74,9 @@ public class SettingActivity extends BaseMenuActivity {
                             public void onClick(View v) {
                                 if (getData().toggle != null) {
                                     getData().switchToggle();
+                                    if (getData().item == SettingItemBean.ITEM_CLICK_TRANS) {
+                                        clickTransClicked(toggle.isChecked());
+                                    }
                                     onRefresh(getData());
                                 }
                             }
@@ -132,6 +138,7 @@ public class SettingActivity extends BaseMenuActivity {
             public BaseHolder<String> getHolder() {
                 return new BaseHolder<String>(SettingActivity.this) {
                     private TextView tv;
+
                     @Override
                     public View initView() {
                         View view = UIUtils.inflate(R.layout.item_list_site);
@@ -203,9 +210,21 @@ public class SettingActivity extends BaseMenuActivity {
     protected String getTitleStr() {
         return UIUtils.getString(R.string.menu_setting);
     }
-    public void refreshFirstLangUI(){
+
+    public void refreshFirstLangUI() {
         mData = initData();
-        ((MyBaseAdapter<SettingItemBean>)mLv_settings.getAdapter()).notifyDataSetChanged(mData);
+        ((MyBaseAdapter<SettingItemBean>) mLv_settings.getAdapter()).notifyDataSetChanged(mData);
     }
 
+    private void clickTransClicked(boolean isCheck) {
+        if (isCheck) {
+            if (CommonUtils.isGotAppOps()) {
+                ServiceUtils.startClickTransService();
+            } else {
+                Toast.makeText(SettingActivity.this, "无权限", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            ServiceUtils.stopClickTransService();
+        }
+    }
 }

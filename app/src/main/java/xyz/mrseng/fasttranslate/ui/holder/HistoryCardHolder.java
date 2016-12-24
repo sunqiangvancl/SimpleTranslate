@@ -16,7 +16,7 @@ import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.dao.TransDao;
 import xyz.mrseng.fasttranslate.domain.TransBean;
 import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.MarkService;
+import xyz.mrseng.fasttranslate.engine.MarkService;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.base.MyBaseAdapter;
@@ -49,7 +49,7 @@ public class HistoryCardHolder extends BaseHolder<ArrayList<TransBean>> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HomeActivity homeActivity = (HomeActivity) getActivity();
                 TransBean bean = getData().get(position);
-                bean.token = Canstant.TOKEN_LOCAL;
+                bean.token = TransBean.TOKEN_LOCAL;
                 homeActivity.setTransInfo(bean);
                 homeActivity.notifyTransInfoChanged();
             }

@@ -1,4 +1,4 @@
-package xyz.mrseng.fasttranslate.service.protocol;
+package xyz.mrseng.fasttranslate.engine.protocol;
 
 import xyz.mrseng.fasttranslate.domain.TranslateBean;
 import xyz.mrseng.fasttranslate.global.exception.NetworkDisabledException;

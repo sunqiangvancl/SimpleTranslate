@@ -1,4 +1,4 @@
-package xyz.mrseng.fasttranslate.service.protocol;
+package xyz.mrseng.fasttranslate.engine.protocol;
 
 import java.util.ArrayList;
 

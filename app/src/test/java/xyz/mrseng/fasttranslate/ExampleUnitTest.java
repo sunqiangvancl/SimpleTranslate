@@ -1,11 +1,6 @@
 package xyz.mrseng.fasttranslate;
 
-import android.content.Context;
-import android.test.mock.MockContext;
-
 import org.junit.Test;
-
-import xyz.mrseng.fasttranslate.utils.TransUtils;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,12 +15,6 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void testSwitch() {
-        String text = "自动检测";
-        Context context = new MockContext();
-        System.out.println(TransUtils.switchCodeAndWord(context, text));
-    }
 
 
 }

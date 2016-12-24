@@ -14,7 +14,7 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
  * Created by MrSeng on 2016/12/19.
- * 向我付款的逻辑
+ * 向我付款卡片
  */
 
 public class PayToMeHolder extends BaseHolder {

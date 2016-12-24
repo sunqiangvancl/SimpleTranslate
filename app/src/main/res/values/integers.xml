@@ -2,4 +2,6 @@
 <resources>
     <!--左侧边栏的图标透明度，0-100之间-->
     <integer name="alpha_menu_icon">160</integer>
+    <!--闪屏页等待时长-->
+    <integer name="time_splash_wait">200</integer>
 </resources>

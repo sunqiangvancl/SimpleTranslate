@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
 import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.MarkService;
+import xyz.mrseng.fasttranslate.engine.MarkService;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.ui.base.BaseMenuActivity;
 import xyz.mrseng.fasttranslate.ui.base.MyBaseAdapter;
@@ -95,7 +95,7 @@ public class MarkedActivity extends BaseMenuActivity {
     private void initData() {
         boolean sortbytime = SPUtils.getBoolean(SPUtils.KEY_SORT_BY_TIME, true);
         markedList = sortbytime ? markService.getMarked(0) : markService.getMarkedSortedByABC(0);
-        if (markedList == null && markedList.size() == 0) {
+        if (markedList == null || markedList.size() == 0) {
             mLl_noMark.setVisibility(View.VISIBLE);
             mLv_marked.setVisibility(View.GONE);
         } else {

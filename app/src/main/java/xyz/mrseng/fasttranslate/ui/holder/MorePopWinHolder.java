@@ -19,12 +19,13 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
  * Created by MrSeng on 2016/12/17.
+ * 结果卡片点击更多按钮展示的
  */
 
-public class MorePPWHolder extends BaseHolder<ArrayList<PpwMoreBean>> {
+public class MorePopWinHolder extends BaseHolder<ArrayList<PpwMoreBean>> {
     private PopupWindow mWindow;
 
-    public MorePPWHolder(Activity activity, PopupWindow window) {
+    public MorePopWinHolder(Activity activity, PopupWindow window) {
         super(activity);
         mWindow = window;
     }
@@ -65,6 +66,7 @@ public class MorePPWHolder extends BaseHolder<ArrayList<PpwMoreBean>> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (getData().get(position).item) {
                     case PpwMoreBean.ITEM_REFRESH://刷新
+                        ((HomeActivity) getActivity()).getTransInfo().token = TransBean.TOKEN_NET;
                         ((HomeActivity) getActivity()).notifyTransInfoChanged();
                         break;
                     case PpwMoreBean.ITEM_INVERSE://反相
@@ -75,8 +77,6 @@ public class MorePPWHolder extends BaseHolder<ArrayList<PpwMoreBean>> {
                     case PpwMoreBean.ITEM_SHARE://分享
                         break;
                 }
-
-
                 mWindow.dismiss();
             }
         });
@@ -103,7 +103,7 @@ public class MorePPWHolder extends BaseHolder<ArrayList<PpwMoreBean>> {
         ArrayList<PpwMoreBean> menus = new ArrayList<>();
         menus.add(share);
         menus.add(full);
-        menus.add(inverse);
+//        menus.add(inverse);
         menus.add(refresh);
         return menus;
     }

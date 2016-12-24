@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
-import xyz.mrseng.fasttranslate.service.TransService;
+import xyz.mrseng.fasttranslate.engine.TransService;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
 import xyz.mrseng.fasttranslate.utils.UIUtils;

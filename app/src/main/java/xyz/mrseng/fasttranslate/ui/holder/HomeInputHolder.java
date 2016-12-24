@@ -2,7 +2,6 @@ package xyz.mrseng.fasttranslate.ui.holder;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,8 +14,7 @@ import android.widget.Toast;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
-import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.TransService;
+import xyz.mrseng.fasttranslate.engine.TransService;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
 import xyz.mrseng.fasttranslate.ui.activity.SpeechActivity;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
@@ -27,13 +25,13 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  * Created by MrSeng on 2016/12/13.
  */
 
-public class InputHolder extends BaseHolder<String> implements TransService.TranslateListener {
+public class HomeInputHolder extends BaseHolder<String> implements TransService.TranslateListener {
     private ImageView mIv_voice;
     private EditText mEt_home;
     private HomeActivity homeActivity;
     private Switch mSw_now;
 
-    public InputHolder(Activity activity) {
+    public HomeInputHolder(Activity activity) {
         super(activity);
     }
 
@@ -67,9 +65,6 @@ public class InputHolder extends BaseHolder<String> implements TransService.Tran
                 //跳转至语音翻译界面
                 Intent intent = new Intent(getActivity(), SpeechActivity.class);
                 //当前科大讯飞平台仅支持中英文，所以没必要搞多语言适配
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(Canstant.EXTRA_SPEECH,homeActivity.getTransInfo());
-//                intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
         });
@@ -83,7 +78,7 @@ public class InputHolder extends BaseHolder<String> implements TransService.Tran
 
     @Override
     public void afterTrans(TransBean transInfo) {
-        if (transInfo.token == Canstant.TOKEN_LOCAL) {//本地翻译，需要被动配合翻译
+        if (transInfo.token == TransBean.TOKEN_LOCAL) {//本地翻译，需要被动配合翻译
             mEt_home.setText(transInfo.fromWord);
         }
     }
@@ -115,7 +110,7 @@ public class InputHolder extends BaseHolder<String> implements TransService.Tran
             //开启了实时翻译或者按下enter才执行翻译
             if (s.toString().endsWith("\n") || TextUtils.isEmpty(s.toString()) || SPUtils.getBoolean(SPUtils.KEY_TRANS_NOW, false)) {
                 //网络翻译，在文本改变的时候更新翻译，如果内容为空，也做一次翻译，这样注册翻译监听的类可以做UI更新
-                if (homeActivity.getTransInfo().token == Canstant.TOKEN_NET ) {
+                if (homeActivity.getTransInfo().token == TransBean.TOKEN_NET ) {
                     setData(s.toString());
                 }
             }

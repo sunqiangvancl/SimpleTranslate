@@ -16,12 +16,11 @@ import java.util.LinkedList;
 
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
-import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.TransService;
+import xyz.mrseng.fasttranslate.engine.TransService;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
+import xyz.mrseng.fasttranslate.utils.CommonUtils;
 import xyz.mrseng.fasttranslate.utils.SPUtils;
-import xyz.mrseng.fasttranslate.utils.TransUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -29,7 +28,7 @@ import xyz.mrseng.fasttranslate.utils.UIUtils;
  * 顶部语言选项的逻辑执行者
  */
 
-public class LangHolder extends BaseHolder<TransBean> {
+public class HomeLangHolder extends BaseHolder<TransBean> {
     private Spinner mSp_left;
     private Spinner mSp_right;
     private ImageView mIv_switch;
@@ -39,7 +38,7 @@ public class LangHolder extends BaseHolder<TransBean> {
     private HomeActivity homeActivity;
 
 
-    public LangHolder(Activity activity) {
+    public HomeLangHolder(Activity activity) {
         super(activity);
     }
 
@@ -103,18 +102,26 @@ public class LangHolder extends BaseHolder<TransBean> {
         int sel_r = 0;
         for (int i = 0; i < cnt_l; i++) {
             String left = (String) mSp_left.getAdapter().getItem(i);
-            if (left.equals(TransUtils.switchCodeAndWord(getData().fromCode))) {
+            if (left.equals(TransBean.switchCodeAndWord(getData().fromCode))) {
                 sel_l = i;
             }
         }
         for (int i = 0; i < cnt_r; i++) {
             String right = (String) mSp_right.getAdapter().getItem(i);
-            if (right.equals(TransUtils.switchCodeAndWord(getData().toCode))) {
+            if (right.equals(TransBean.switchCodeAndWord(getData().toCode))) {
                 sel_r = i;
             }
         }
         mSp_left.setSelection(sel_l);
         mSp_right.setSelection(sel_r);
+
+        updateTrans();
+    }
+
+    private void updateTrans() {
+        homeActivity.getTransInfo().fromCode = getData().fromCode;
+        homeActivity.getTransInfo().toCode = getData().toCode;
+        homeActivity.notifyTransInfoChanged();
     }
 
 
@@ -158,14 +165,19 @@ public class LangHolder extends BaseHolder<TransBean> {
     private boolean isAniming = false;//标记是否正在执行动画
 
     public void onActivityResume() {
+
         //初始化code,保持此holder的data与Activity的data是同一个对象
         TransBean data = homeActivity.getTransInfo();
-        data.fromCode = SPUtils.getString(SPUtils.KEY_FIRST_FROM_CODE, TransBean.getLangCodeStr(TransBean.LANG_CODE_AUTO));
-        data.toCode = SPUtils.getString(SPUtils.KEY_FIRST_TO_CODE, TransBean.getLangCodeStr(TransBean.LANG_CODE_EN));
-//        mSp_left.setSelection(TransBean.getCodeIntByCodeStr(data.fromCode));
-//        mSp_right.setSelection(TransBean.getCodeIntByCodeStr(data.toCode) - 1);
+        data.fromCode = SPUtils.getFirstFromCode();
+        data.toCode = SPUtils.getFirstToCode();
+        mSp_left.setSelection(TransBean.getCodeIntByCodeStr(data.fromCode));
+        mSp_right.setSelection(TransBean.getCodeIntByCodeStr(data.toCode) - 1);
+        if (getData() != null &&
+                !(CommonUtils.equeals(getData().toCode, data.toCode) && CommonUtils.equeals(getData().fromCode, data.fromCode))) {
+            homeActivity.setTransInfo(data);
+            homeActivity.notifyTransInfoChanged();
+        }
         setData(data);//更新显示
-        homeActivity.setTransInfo(data);
     }
 
     class MyAnimListener implements Animation.AnimationListener {
@@ -188,12 +200,11 @@ public class LangHolder extends BaseHolder<TransBean> {
 
     @Override
     public void onRefresh(TransBean data) {
-        if (data.token!=null && data.token == Canstant.TOKEN_NET){
+        if (data.token != null && data.token == TransBean.TOKEN_NET) {
             homeActivity.setTransInfo(getData());
         }
         mSp_left.setSelection(TransBean.getCodeIntByCodeStr(data.fromCode));
         mSp_right.setSelection(TransBean.getCodeIntByCodeStr(data.toCode) - 1);
-//        homeActivity.getTransInfo().token = Canstant.TOKEN_NET;
     }
 
     private void initSpinner() {
@@ -240,13 +251,13 @@ public class LangHolder extends BaseHolder<TransBean> {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             boolean needTrans = false;
             if (isLeft) {
-                String fromCode = TransUtils.switchCodeAndWord((String) mSp_left.getSelectedItem());
+                String fromCode = TransBean.switchCodeAndWord((String) mSp_left.getSelectedItem());
                 if (fromCode != null && !fromCode.equals(getData().fromCode)) {
                     getData().fromCode = fromCode;
                     needTrans = true;
                 }
             } else {
-                String toCode = TransUtils.switchCodeAndWord((String) mSp_right.getSelectedItem());
+                String toCode = TransBean.switchCodeAndWord((String) mSp_right.getSelectedItem());
                 if (toCode != null && !toCode.equals(getData().toCode)) {
                     getData().toCode = toCode;
                     needTrans = true;
@@ -254,9 +265,7 @@ public class LangHolder extends BaseHolder<TransBean> {
             }
             setData(getData());//更新语言条数据
             if (needTrans) {
-                homeActivity.getTransInfo().fromCode = getData().fromCode;
-                homeActivity.getTransInfo().toCode = getData().toCode;
-                homeActivity.notifyTransInfoChanged();
+                updateTrans();
             }
         }
 

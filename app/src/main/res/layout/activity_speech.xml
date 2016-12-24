@@ -8,22 +8,56 @@
     android:orientation="vertical"
     tools:context="xyz.mrseng.fasttranslate.ui.activity.SpeechActivity">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"/>
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_text_top_speech"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:hint="@string/please_speech"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"/>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/light_gray"/>
 
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"/>
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_text_bottom_speech"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"/>
+
+        <ImageView
+            android:id="@+id/iv_audio_play_bottom_speech"
+            android:layout_margin="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_play_audio"/>
+    </RelativeLayout>
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,12 +76,19 @@
             android:padding="5dp"
             android:text="English"
             android:textColor="@drawable/selector_text_white_red"
-            android:textSize="22sp"/>
+            android:textSize="25sp"/>
 
-        <LinearLayout
-            android:gravity="center"
-            android:layout_width="75dp"
-            android:layout_height="70dp">
+        <RelativeLayout
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_bg_speech1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/shape_circle_gray"/>
+
             <ImageView
                 android:id="@+id/iv_speech"
                 android:layout_width="50dp"
@@ -55,7 +96,7 @@
                 android:background="@drawable/selector_bg_red_gray"
                 android:padding="5dp"
                 android:src="@drawable/selector_speech"/>
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_to_speech"
@@ -66,7 +107,7 @@
             android:gravity="center"
             android:text="English"
             android:textColor="@drawable/selector_text_white_red"
-            android:textSize="22sp"/>
+            android:textSize="25sp"/>
 
 
     </LinearLayout>

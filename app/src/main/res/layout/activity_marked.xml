@@ -5,7 +5,6 @@
     android:id="@+id/activity_marked"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_230"
     android:orientation="vertical"
     tools:context="xyz.mrseng.fasttranslate.ui.activity.MarkedActivity">
 
@@ -17,10 +16,8 @@
         <ListView
             android:visibility="gone"
             android:id="@+id/lv_mark"
-            android:listSelector="@color/light_gray"
             android:divider="@color/light_gray"
             android:dividerHeight="1dp"
-            android:background="@color/light_240"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <LinearLayout

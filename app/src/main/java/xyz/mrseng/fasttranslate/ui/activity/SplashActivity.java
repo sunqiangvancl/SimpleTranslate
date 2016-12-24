@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.global.Canstant;
 import xyz.mrseng.fasttranslate.ui.base.BaseActivity;
+import xyz.mrseng.fasttranslate.utils.SPUtils;
+import xyz.mrseng.fasttranslate.utils.ServiceUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -30,7 +32,7 @@ public class SplashActivity extends BaseActivity {
         long startTime = System.currentTimeMillis();
         init();//进行初始化操作
         long endTime = System.currentTimeMillis();
-        long rest = Canstant.TIME_SPLASH_WAITING - endTime + startTime;
+        long rest = UIUtils.getInteger(R.integer.time_splash_wait) - endTime + startTime;
         UIUtils.getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -39,13 +41,16 @@ public class SplashActivity extends BaseActivity {
             }
         }, rest > 0 ? rest : 0);
 
-        overridePendingTransition(R.anim.activity_in,R.anim.activity_out);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
     }
 
     private void init() {
+        //判断开启点按翻译服务
+        if (SPUtils.isClickTransEnabled()) {
+            ServiceUtils.startClickTransService();
+        } else {
+            ServiceUtils.stopClickTransService();
+        }
     }
-
-
-
 }

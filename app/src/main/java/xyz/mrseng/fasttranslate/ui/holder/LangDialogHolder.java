@@ -45,11 +45,9 @@ public class LangDialogHolder extends BaseHolder<TransBean> {
         rightMap.remove(TransBean.LANG_CODE_AUTO);
         mWv_from.setItems(new ArrayList<String>(leftMap.values()));
         mWv_to.setItems(new ArrayList<String>(rightMap.values()));
-        int from_idx = getLangIdx(SPUtils.getString(SPUtils.KEY_FIRST_FROM_CODE,
-                UIUtils.getStringArray(R.array.lang_code)[0]));
+        int from_idx = getLangIdx(SPUtils.getFirstFromCode());
         mWv_from.setSeletion(from_idx);
-        int to_idx = getLangIdx(SPUtils.getString(SPUtils.KEY_FIRST_TO_CODE,
-                UIUtils.getStringArray(R.array.lang_code)[1])) - 1;
+        int to_idx = getLangIdx(SPUtils.getFirstToCode()) -1;
         mWv_to.setSeletion(to_idx);
     }
 

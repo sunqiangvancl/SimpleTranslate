@@ -13,11 +13,12 @@ import android.widget.Toast;
 import xyz.mrseng.fasttranslate.R;
 import xyz.mrseng.fasttranslate.domain.TransBean;
 import xyz.mrseng.fasttranslate.global.Canstant;
-import xyz.mrseng.fasttranslate.service.MarkService;
-import xyz.mrseng.fasttranslate.service.TransService;
+import xyz.mrseng.fasttranslate.global.VoiceManager;
+import xyz.mrseng.fasttranslate.engine.MarkService;
+import xyz.mrseng.fasttranslate.engine.TransService;
 import xyz.mrseng.fasttranslate.ui.activity.HomeActivity;
 import xyz.mrseng.fasttranslate.ui.base.BaseHolder;
-import xyz.mrseng.fasttranslate.utils.TransUtils;
+import xyz.mrseng.fasttranslate.utils.CommonUtils;
 import xyz.mrseng.fasttranslate.utils.UIUtils;
 
 /**
@@ -33,8 +34,10 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
     private ImageView mIv_mark;
     private HomeActivity homeActivity;
     private ImageView mIv_more;
-    private MorePPWHolder moreHolder;
+    private MorePopWinHolder moreHolder;
     private TextView mTv_site;
+    private ImageView mIv_read;
+    private VoiceManager mVoiceManager;
 
     public ResultCardHolder(Activity activity) {
         super(activity);
@@ -42,6 +45,8 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
 
     @Override
     public View initView() {
+        mVoiceManager = VoiceManager.getNewInstance();
+
         homeActivity = (HomeActivity) getActivity();
 
         View view = UIUtils.inflate(R.layout.card_result_home);
@@ -60,6 +65,9 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
 
         mTv_site = (TextView) view.findViewById(R.id.tv_from_site);
 
+        mIv_read = (ImageView) view.findViewById(R.id.iv_audio_play);
+        mIv_read.setOnClickListener(this);
+
         //注册翻译监听
         homeActivity.getTransService().addTransListener(this);
         return view;
@@ -68,18 +76,19 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
     @Override
     public void onRefresh(TransBean data) {
         mTv_result.setText(data.toWord == null ? "" : data.toWord);
-        mTv_readLang.setText(TransUtils.switchCodeAndWord(data.toCode));
+        mTv_readLang.setText(TransBean.switchCodeAndWord(data.toCode));
         mIv_mark.setImageDrawable(UIUtils.getDrawable(data.marked == Canstant.MARKED ? R.drawable.ic_star_marked : R.drawable.ic_star36));
         mTv_site.setText(data.site==null?"":data.site);
     }
 
     @Override
     public void afterTrans(TransBean transInfo) {
-        if (transInfo.token == Canstant.TOKEN_NET) {
+        if (transInfo.token == TransBean.TOKEN_NET) {
             //根据FromWord和ToWord更新是否收藏
             transInfo.marked = markService.isMarked(transInfo) ? Canstant.MARKED : Canstant.UN_MARKED;
         }
         setData(transInfo);
+        homeActivity.setTransInfo(transInfo);
     }
 
     @Override
@@ -91,7 +100,7 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_copy_result://复制
-                TransUtils.copyText(mTv_result.getText().toString());
+                CommonUtils.copyText(mTv_result.getText().toString());
                 Toast.makeText(UIUtils.getContext(), UIUtils.getString(R.string.copy_success), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_mark_result://收藏
@@ -107,12 +116,14 @@ public class ResultCardHolder extends BaseHolder<TransBean> implements TransServ
                 PopupWindow popWin = new PopupWindow(getActivity());
                 popWin.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
                 popWin.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                moreHolder = new MorePPWHolder(getActivity(),popWin);
+                moreHolder = new MorePopWinHolder(getActivity(),popWin);
                 popWin.setContentView(moreHolder.getRootView());
-
                 popWin.setFocusable(true);
                 popWin.setBackgroundDrawable(new BitmapDrawable());
                 popWin.showAtLocation(mIv_mark, Gravity.LEFT, mIv_more.getLeft(), mIv_more.getHeight());
+                break;
+            case R.id.iv_audio_play://朗读
+                mVoiceManager.readText(mTv_result.getText().toString());
                 break;
         }
     }

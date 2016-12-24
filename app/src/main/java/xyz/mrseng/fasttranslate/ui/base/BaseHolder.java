@@ -1,10 +1,7 @@
 package xyz.mrseng.fasttranslate.ui.base;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
-
-import xyz.mrseng.fasttranslate.service.TransService;
 
 /**
  * Created by MrSeng on 2016/12/12.
@@ -19,8 +16,9 @@ public abstract class BaseHolder<T> {
     public Activity getActivity() {
         return mActivity;
     }
+
+
     public BaseHolder(Activity activity) {
-//        mService = TransService.getNewInstance();
         mActivity = activity;
         mRootView = initView();
     }
